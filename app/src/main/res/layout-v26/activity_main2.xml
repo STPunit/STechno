@@ -121,7 +121,7 @@
                 android:textSize="16sp" />
 
             <EditText
-                android:layout_width="120dp"
+                android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="5dp"
@@ -153,7 +153,7 @@
 
             <Spinner
                 android:id="@+id/Areaspin"
-                android:layout_width="120dp"
+                android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
@@ -181,7 +181,7 @@
                 android:text="@string/address_line_1" />
 
             <EditText
-                android:layout_width="120dp"
+                android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
@@ -209,7 +209,7 @@
 
             <Spinner
                 android:id="@+id/ServiceSpin"
-                android:layout_width="120dp"
+                android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="5dp"
@@ -238,7 +238,7 @@
                 android:textSize="16sp" />
 
             <EditText
-                android:layout_width="120dp"
+                android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="5dp"
@@ -264,7 +264,7 @@
 
             <Spinner
                 android:id="@+id/AssignSpin"
-                android:layout_width="120dp"
+                android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="5dp"
@@ -293,7 +293,7 @@
 
             <Spinner
                 android:id="@+id/StatusSpin"
-                android:layout_width="120dp"
+                android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="5dp"
@@ -322,7 +322,7 @@
 
         <Spinner
             android:id="@+id/PrioritySpin"
-            android:layout_width="120dp"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginTop="5dp"
@@ -351,7 +351,7 @@
 
             <Spinner
                 android:id="@+id/BillSpin"
-                android:layout_width="120dp"
+                android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="5dp"
@@ -379,7 +379,7 @@
 
             <Spinner
                 android:id="@+id/PaymentSpin"
-                android:layout_width="120dp"
+                android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="5dp"
@@ -473,6 +473,7 @@
                 android:background="@drawable/shape"
                 android:layout_height="100dp"
                 app:penColor="@android:color/black"
+                app:clearOnDoubleClick="true"
                 />
 
 

@@ -32,7 +32,7 @@ public class Main2Activity extends AppCompatActivity  {
     ImageButton BPickDate1;
     SignaturePad mSignaturePad;
     FirebaseDatabase firebaseDatabase;
-    Spinner AreaSpin;
+    Spinner AreaSpin, StatusSpin, PrioritySpin, BillSpin, PaymentSpin;
 
 
     @Override
@@ -45,18 +45,109 @@ public class Main2Activity extends AppCompatActivity  {
 
         DatabaseReference stat = database.getReference();
         DatabaseReference rev = stat.child("Status").getRef();
-        rev.addValueEventListener(new ValueEventListener() {
-            @Override
+        DatabaseReference arel = stat.child("AreaList").getRef();
+        DatabaseReference prir = stat.child("Priority").getRef();
+        DatabaseReference bl = stat.child("Billing").getRef();
+        DatabaseReference PayStat = stat.child("PStatus").getRef();
 
+        //Billing spin
+        bl.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                final List<String> pr1 = new ArrayList<>();
+                for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren() ){
+                    String prname1 = childDataSnapshot.getValue(String.class);
+                    pr1.add(prname1);
+                    ArrayAdapter<String> pradp1 = new ArrayAdapter<>(Main2Activity.this, R.layout.support_simple_spinner_dropdown_item, pr1);
+                    BillSpin.setAdapter(pradp1);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        //PAyment Spin
+
+        PayStat.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                final  List<String> pay1 = new ArrayList<>();
+
+                for (DataSnapshot childDataSnapShot : dataSnapshot.getChildren()) {
+                    String stpay = childDataSnapShot.getValue(String.class);
+                    pay1.add(stpay);
+                    
+                    ArrayAdapter<String> payadp = new ArrayAdapter<>(Main2Activity.this, R.layout.support_simple_spinner_dropdown_item, pay1);
+                    PaymentSpin.setAdapter(payadp);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+        //priority spin
+
+        prir.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                final List<String> pr = new ArrayList<>();
+                for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren() ){
+                    String prname = childDataSnapshot.getValue(String.class);
+                    pr.add(prname);
+                    ArrayAdapter<String> pradp = new ArrayAdapter<>(Main2Activity.this, R.layout.support_simple_spinner_dropdown_item, pr);
+                    PrioritySpin.setAdapter(pradp);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        //area spinner
+
+        arel.addValueEventListener(new ValueEventListener() {
+            @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 final List<String> areas = new ArrayList<>();
 
                 for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
-                    String areaName = childDataSnapshot.child("Status").getValue(String.class);
-                    areas.add(areaName);
+                    String areaname = childDataSnapshot.getValue(String.class);
+                    areas.add(areaname);
 
-                    ArrayAdapter<String> areasAdapter = new ArrayAdapter<String>(Main2Activity.this, R.layout.support_simple_spinner_dropdown_item, areas);
-                    AreaSpin.setAdapter(areasAdapter);
+                    ArrayAdapter<String> areaAdapter = new ArrayAdapter<>(Main2Activity.this, R.layout.support_simple_spinner_dropdown_item, areas);
+                    AreaSpin.setAdapter(areaAdapter);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        // status spinner
+        rev.addValueEventListener(new ValueEventListener() {
+            @Override
+
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                final List<String> stats = new ArrayList<>();
+
+                for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
+                    String statusname = childDataSnapshot.child("Status").getValue(String.class);
+                    stats.add(statusname);
+
+                    ArrayAdapter<String> statAdapter = new ArrayAdapter<String>(Main2Activity.this, R.layout.support_simple_spinner_dropdown_item, stats);
+                    StatusSpin.setAdapter(statAdapter);
 
                 }
 
@@ -74,6 +165,11 @@ public class Main2Activity extends AppCompatActivity  {
         DatePick = findViewById(R.id.DatePick);
         AreaSpin = findViewById(R.id.Areaspin);
         BPickDate1 = findViewById(R.id.BPickDate1);
+        StatusSpin = findViewById(R.id.StatusSpin);
+        BillSpin = findViewById(R.id.BillSpin);
+        PrioritySpin = findViewById(R.id.PrioritySpin);
+        PaymentSpin = findViewById(R.id.PaymentSpin);
+
         String date1= new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
         DatePick.setText(date1);
 
@@ -110,6 +206,12 @@ public class Main2Activity extends AppCompatActivity  {
 
         public void setmSignaturePad(SignaturePad mSignaturePad) {
         this.mSignaturePad = mSignaturePad;
+
+
+    }
+
+    public SignaturePad getmSignaturePad() {
+        return mSignaturePad;
     }
 }
 
