@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "470244238109",
+    "firebase_url": "https://stechno-bce14.firebaseio.com",
+    "project_id": "stechno-bce14",
+    "storage_bucket": "stechno-bce14.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:470244238109:android:122cf34a7a74783e",
+        "android_client_info": {
+          "package_name": "com.example.desktop.stechno"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "470244238109-fje4j8r06ntae1hj4vpjdmsr8alq8e4u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.desktop.stechno",
+            "certificate_hash": "ecd25363c7d542b7d1c6af59c6b34133b8d905c2"
+          }
+        },
+        {
+          "client_id": "470244238109-07ubmg8deij84msb8jrn8o20c334hquq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBv4ZTR0ITfeRJryaGH9cVUM1dUklU7ufw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "470244238109-07ubmg8deij84msb8jrn8o20c334hquq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

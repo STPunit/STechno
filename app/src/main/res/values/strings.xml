@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Smart Techno</string>
+    <string name="date">Date</string>
+    <string name="pick_date">Pick Date</string>
+    <string name="name">Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="first_name">First Name</string>
+    <string name="number">Number</string>
+    <string name="mobile_no">Mobile No.</string>
+    <string name="address">Address</string>
+    <string name="address_line_1">Address Line 1</string>
+    <string name="area_line">Area Line</string>
+    <string name="service_type">Service Type</string>
+    <string name="service_info">Service Info</string>
+    <string name="assigned_to">Assigned to :</string>
+    <string name="status">Status</string>
+    <string name="priority">Priority</string>
+    <string name="billing">Billing</string>
+    <string name="payment_status">Payment Status</string>
+    <string name="write_remarks">Write Remarks</string>
+    <string name="remarks">Remarks</string>
+    <string name="image">Image</string>
+    <string name="signature">Signature</string>
+    <string name="image_path">Image Path</string>
+    <string name="todo">TODO</string>
+</resources>
