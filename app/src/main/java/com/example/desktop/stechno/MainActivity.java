@@ -7,8 +7,14 @@ import android.view.View;
 import android.widget.Button;
 
 
+import com.google.firebase.database.FirebaseDatabase;
+
 
 public class MainActivity extends AppCompatActivity {
+
+
+
+
     Button button2;
 
     @Override
@@ -21,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public  void onClick(View v)
             {
-                Intent i = new Intent(getApplicationContext(),Main2Activity.class);
+                Intent i = new Intent(MainActivity.this, Main2Activity.class);
                 startActivity(i);
             }
         });

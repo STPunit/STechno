@@ -5,7 +5,7 @@
     android:id="@+id/scroll1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#d6d6d6"
+    android:background="#ffffff"
     tools:context=".Main2Activity">
 
     <LinearLayout
@@ -207,18 +207,15 @@
                 android:text="@string/service_type"
                 android:textSize="16sp" />
 
-            <Spinner
+            <io.apptik.widget.multiselectspinner.MultiSelectSpinner
                 android:id="@+id/ServiceSpin"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:autofillHints="Select"
-                android:padding="3dp">
+                android:padding="3dp" />
 
-
-            </Spinner>
 
         </LinearLayout>
         <LinearLayout
@@ -236,6 +233,7 @@
                 android:padding="3dp"
                 android:text="@string/service_info"
                 android:textSize="16sp" />
+
 
             <EditText
                 android:layout_width="160dp"
@@ -262,7 +260,8 @@
                 android:text="@string/assigned_to"
                 android:textSize="16sp" />
 
-            <Spinner
+
+            <io.apptik.widget.multiselectspinner.MultiSelectSpinner
                 android:id="@+id/AssignSpin"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
@@ -471,13 +470,38 @@
                 android:id="@+id/signature_pad"
                 android:layout_width="match_parent"
                 android:background="@drawable/shape"
-                android:layout_height="100dp"
+                android:layout_height="140dp"
                 app:penColor="@android:color/black"
                 app:clearOnDoubleClick="true"
                 />
 
 
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/SubButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="3dp"
+                android:text="@string/submit"
+                android:textAlignment="center" />
+
+            <ImageView
+                android:id="@+id/TestPad"
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:contentDescription="TODO" />
+
+
+        </LinearLayout>
+
+
     </LinearLayout>
 
 </ScrollView>
