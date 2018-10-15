@@ -77,7 +77,7 @@
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/FIrstn"
+                android:id="@+id/Name1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
@@ -89,7 +89,7 @@
                 android:padding="3dp" />
 
             <EditText
-                android:id="@+id/Lastn"
+                android:id="@+id/Name2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -97,9 +97,9 @@
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="5dp"
                 android:hint="@string/last_name"
+                android:importantForAutofill="no"
                 android:inputType="textCapCharacters"
-                android:padding="3dp"
-                android:importantForAutofill="no" />
+                android:padding="3dp" />
 
         </LinearLayout>
 
@@ -121,15 +121,16 @@
                 android:textSize="16sp" />
 
             <EditText
+                android:id="@+id/Number1"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="5dp"
                 android:hint="@string/number"
+                android:importantForAutofill="no"
                 android:inputType="number"
-                android:padding="3dp"
-                android:importantForAutofill="no" />
+                android:padding="3dp" />
 
 
         </LinearLayout>
@@ -181,13 +182,14 @@
                 android:text="@string/address_line_1" />
 
             <EditText
+                android:id="@+id/Area1"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
+                android:autofillHints=""
                 android:hint="@string/address"
-                android:padding="3dp"
-                android:autofillHints="" />
+                android:padding="3dp" />
 
         </LinearLayout>
 
@@ -236,13 +238,14 @@
 
 
             <EditText
+                android:id="@+id/InfoSer"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:padding="3dp"
-                android:hint="@string/service_info" />
+                android:hint="@string/service_info"
+                android:padding="3dp" />
 
         </LinearLayout>
         <LinearLayout
@@ -405,6 +408,7 @@
                 android:textSize="16sp" />
 
             <EditText
+                android:id="@+id/Remarks"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
@@ -496,7 +500,14 @@
                 android:id="@+id/TestPad"
                 android:layout_width="match_parent"
                 android:layout_height="140dp"
-                android:contentDescription="TODO" />
+                android:contentDescription="@string/todo" />
+
+            <Button
+                android:id="@+id/DataAdd"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="@string/submit"
+                android:textAlignment="center" />
 
 
         </LinearLayout>
