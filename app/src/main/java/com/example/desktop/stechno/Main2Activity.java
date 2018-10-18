@@ -1,25 +1,19 @@
 package com.example.desktop.stechno;
 
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.SparseBooleanArray;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -33,7 +27,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.ByteArrayOutputStream;
-import java.sql.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -60,7 +53,6 @@ public class Main2Activity extends AppCompatActivity  {
     Button SubButton, DataAdd;
     Spinner AreaSpin, StatusSpin, PrioritySpin, BillSpin, PaymentSpin;
     MultiSelectSpinner ServiceSpin, AssignSpin;
-   public ArrayAdapter<String > ads;
 
 
 
@@ -197,7 +189,6 @@ public class Main2Activity extends AppCompatActivity  {
                     String SerSpin = childDataSnapshot.getValue(String.class);
                     ServS.add(SerSpin);
 
-                 //   ArrayAdapter<String> MsSPin = new ArrayAdapter<>(Main2Activity.this, R.layout.);
                     ServiceSpin.setItems(ServS);
 
 
@@ -213,54 +204,14 @@ public class Main2Activity extends AppCompatActivity  {
         spinS.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                List<String> Aspin = new ArrayList<>();
+              final   List<String> Aspin = new ArrayList<>();
                 AssignSpin = findViewById(R.id.AssignSpin);
                 for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()){
                     String Astr = childDataSnapshot.getValue(String.class);
                     Aspin.add(Astr);
-                    ArrayAdapter<String> ads = new ArrayAdapter<>(Main2Activity.this, android.R.layout.simple_list_item_multiple_choice, Aspin);
-                    AssignSpin.setAdapter( ads);
-
-//
-//                    boolean[] SelectI = new boolean[ads.getCount()];
-//                    SelectI[0] = true;
-//                    String argg =
-//                    AssignSpin.setSelected(SelectI);
-//                    AssignSpin.getFilterTouchesWhenObscured();
-                 //  Array trys = getResources().getAssets().getLocales();
-                  //  int lenn = ads.getCount();
-//                    AssignSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//                        @Override
-//                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//
-//                            Toast.makeText(Main2Activity.this, "Selected : " + Aspin.get(position), Toast.LENGTH_LONG ).show();
-//                        }
-//
-//                        @Override
-//                        public void onNothingSelected(AdapterView<?> parent) {
-//
-//                        }
-//                    });
+                    AssignSpin.setItems(Aspin);
 
 
-//                    int cntt = ads.getCount();
-//                    SparseBooleanArray sp =
-
-
-                   // SparseBooleanArray checked =
-                  //  String trsss = AssignSpin.getSelectedItem().toString();
-                   // String th = ads.getPosition(pos)
-//                    if (trsss.contains("Amit Soni") ){
-//                        Toast.makeText(Main2Activity.this, "Amit soni selected", Toast.LENGTH_SHORT).show();
-//                    }
-//                    else {
-//                        Toast.makeText(Main2Activity.this, "Nothing here", Toast.LENGTH_SHORT).show();
-//                    }
-
-
-
-//                    List<String> gds =  new ArrayList<>();
-//                    gds = AssignSpin.getSelectedItem(String.class);
 
 
 
@@ -308,7 +259,6 @@ public class Main2Activity extends AppCompatActivity  {
         DatePick = findViewById(R.id.DatePick);
 
         AreaSpin = findViewById(R.id.Areaspin);
-       // AssignSpin = findViewById(R.id.AssignSpin);
         Name1 = findViewById(R.id.Name1);
         Name2 = findViewById(R.id.Name2);
         Remarks = findViewById(R.id.Remarks);
@@ -454,9 +404,10 @@ public class Main2Activity extends AppCompatActivity  {
     public void AddData()
     {
         String dt = DatePick.getText().toString().trim();
-        String nm1 = Name1.getText().toString().trim();
-        String nm2 = Name2.getText().toString().trim();
-        String fame = Name1 + " " + Name2;
+        String nm1 = Name1.getText().toString();
+        String nm2 = Name2.getText().toString();
+        String fame = nm1 + " " + nm2;
+        String time1 = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
         String numb = Number1.getText().toString().trim();
         String arr = AreaSpin.getSelectedItem().toString().trim();
         String arrr = Area1.getText().toString().trim();
@@ -510,7 +461,7 @@ public class Main2Activity extends AppCompatActivity  {
                 reff = FirebaseDatabase.getInstance().getReference("New Task");
 
                  String ndd = reff.push().getKey();
-                 proAdd pr1 = new proAdd(dt, fame, numb, arr, arrr, Stype, Sinf, asstp, statuss, pr, bll, pstatus, rema, bst, ndd);
+                 proAdd pr1 = new proAdd(dt,time1, fame, numb, arr, arrr, Stype, Sinf, asstp, statuss, pr, bll, pstatus, rema, bst, ndd);
                  reff.child(ndd).setValue(pr1);
                  Toast.makeText(Main2Activity.this, "Task Added", Toast.LENGTH_LONG).show();
 

@@ -1,8 +1,10 @@
 package com.example.desktop.stechno;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.firebase.database.ChildEventListener;
@@ -16,7 +18,8 @@ import com.google.firebase.database.ValueEventListener;
 public class Main3Activity extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
 
-    TextView TaskCom, TaskPen, TaskPro;
+    TextView TaskCom, TaskPen, TaskPro,comid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,48 +32,14 @@ public class Main3Activity extends AppCompatActivity {
       TaskCom = findViewById(R.id.TaskCom);
       TaskPen = findViewById(R.id.TaskPen);
       TaskPro = findViewById(R.id.TaskPro);
-      //  Query query = tsk1.orderByChild("TaskStatus").equalTo("COMPLETED");
-//        ValueEventListener valueEventListener = new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                long cou = dataSnapshot.getChildrenCount();
-//                String co = Long.toString(cou);
-//                TaskCom.setText(co);
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        };
-//        query.addListenerForSingleValueEvent(valueEventListener);
-
-//      tsk1.addValueEventListener(new ValueEventListener() {
-//          @Override
-//          public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//
-//              for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()){
-//                  Long cm = childDataSnapshot.child("COMPLETED").;
-//                  Long pn = childDataSnapshot.child("In_Progress").getChildrenCount();
-//                  Long pr = childDataSnapshot.child("PENDING").getChildrenCount();
-//
-//                  Log.e(childDataSnapshot.getKey(), childDataSnapshot.getChildrenCount() +"");
-//
-//                  String stcm = Long.toString(cm);
-//                  String stpn  = Long.toString(pn);
-//                  String stpr = Long.toString(pr);
-//                  TaskCom.setText(stcm);
-//                  TaskPen.setText(stpn);
-//                  TaskPro.setText(stpr);
-//              }
-//
-//          }
-//
-//          @Override
-//          public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//          }
-//      });
+      comid = findViewById(R.id.comid);
+     comid.setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick(View v) {
+             Intent i = new Intent(Main3Activity.this,Main4Activity.class);
+             startActivity(i);
+         }
+     });
 
         DatabaseReference rootref = tsk.child("New Task");
         Query query = rootref.orderByChild("TaskStatus").equalTo("COMPLETED");

@@ -26,7 +26,8 @@
             android:name="com.google.android.actions"
             android:resource="@drawable/shape" />
 
-        <activity android:name=".Main3Activity"></activity>
+        <activity android:name=".Main3Activity" />
+        <activity android:name=".Main4Activity"></activity>
     </application>
 
 </manifest>

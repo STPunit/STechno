@@ -2,6 +2,7 @@ package com.example.desktop.stechno;
 
 public class proAdd {
     String TaskDate;
+    String TaskTime;
     String TaskName;
     String TaskNumber;
     String TaskArea;
@@ -18,30 +19,35 @@ public class proAdd {
     String TaskId;
 
 
-    private proAdd() {
+    public proAdd() {
 
     }
 
-    public proAdd(String taskDate, String taskName, String taskNumber, String taskArea, String taskAreaLine, String taskServiceType, String taskServiceInfo, String taskAssignedTo, String taskStatus, String taskPriority, String taskBilled, String taskPaymentStatus, String taskRemarks, String taskSignature, String taskId) {
-        this.TaskDate = taskDate;
-        this.TaskName = taskName;
-        this.TaskNumber = taskNumber;
-        this.TaskArea = taskArea;
-        this.TaskAreaLine = taskAreaLine;
-        this.TaskServiceType = taskServiceType;
-        this.TaskServiceInfo = taskServiceInfo;
-        this.TaskAssignedTo = taskAssignedTo;
-        this.TaskStatus = taskStatus;
-        this.TaskPriority = taskPriority;
-        this.TaskBilled = taskBilled;
-        this.TaskPaymentStatus = taskPaymentStatus;
-        this.TaskRemarks = taskRemarks;
-        this.TaskSignature = taskSignature;
-        this.TaskId = taskId;
+    public proAdd(String taskDate, String taskTime, String taskName, String taskNumber, String taskArea, String taskAreaLine, String taskServiceType, String taskServiceInfo, String taskAssignedTo, String taskStatus, String taskPriority, String taskBilled, String taskPaymentStatus, String taskRemarks, String taskSignature, String taskId) {
+        TaskDate = taskDate;
+        TaskTime = taskTime;
+        TaskName = taskName;
+        TaskNumber = taskNumber;
+        TaskArea = taskArea;
+        TaskAreaLine = taskAreaLine;
+        TaskServiceType = taskServiceType;
+        TaskServiceInfo = taskServiceInfo;
+        TaskAssignedTo = taskAssignedTo;
+        TaskStatus = taskStatus;
+        TaskPriority = taskPriority;
+        TaskBilled = taskBilled;
+        TaskPaymentStatus = taskPaymentStatus;
+        TaskRemarks = taskRemarks;
+        TaskSignature = taskSignature;
+        TaskId = taskId;
     }
 
     private String getTaskDate() {
         return TaskDate;
+    }
+
+    private String getTaskTime() {
+        return TaskTime;
     }
 
     private String getTaskName() {

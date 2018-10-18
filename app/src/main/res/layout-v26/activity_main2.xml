@@ -89,9 +89,9 @@
                 android:padding="3dp" />
 
             <EditText
-                android:id="@+id/Name2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/Name2"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="5dp"
