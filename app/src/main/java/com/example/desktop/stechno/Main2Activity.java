@@ -12,7 +12,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -41,16 +40,14 @@ public class Main2Activity extends AppCompatActivity  {
 
     EditText DatePick, Name1, Name2, Remarks, Number1, Area1, InfoSer;
     int mYear, mMonth, mDay;
-    ImageButton BPickDate1;
     SignaturePad mSignaturePad;
     Image pr;
     StorageReference mStoreage;
     ImageView TestPad;
-    FirebaseDatabase firebaseDatabase, Prodidd;
-    DatabaseReference reef, reff;
+    DatabaseReference  reff;
 
 
-    Button SubButton, DataAdd;
+    Button SubButton, DataAdd, ButtonDate;
     Spinner AreaSpin, StatusSpin, PrioritySpin, BillSpin, PaymentSpin;
     MultiSelectSpinner ServiceSpin, AssignSpin;
 
@@ -63,16 +60,57 @@ public class Main2Activity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
+
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         mStoreage = FirebaseStorage.getInstance().getReference();
-        reff  = FirebaseDatabase.getInstance().getReference("New Task");
-
-
+        reff = FirebaseDatabase.getInstance().getReference("New Task");
 
 
         final DatabaseReference stat = database.getReference();
 
+        mSignaturePad = findViewById(R.id.signature_pad);
 
+        DatePick = findViewById(R.id.DatePick);
+
+        AreaSpin = findViewById(R.id.Areaspin);
+        Name1 = findViewById(R.id.Name1);
+        Name2 = findViewById(R.id.Name2);
+        Remarks = findViewById(R.id.Remarks);
+        InfoSer = findViewById(R.id.InfoSer);
+        Number1 = findViewById(R.id.Number1);
+        Area1 = findViewById(R.id.Area1);
+        DataAdd = findViewById(R.id.DataAdd);
+        StatusSpin = findViewById(R.id.StatusSpin);
+        BillSpin = findViewById(R.id.BillSpin);
+        PrioritySpin = findViewById(R.id.PrioritySpin);
+        PaymentSpin = findViewById(R.id.PaymentSpin);
+//        SubButton = findViewById(R.id.SubButton);
+//        TestPad = findViewById(R.id.TestPad);
+        ButtonDate = findViewById(R.id.ButtonDate);
+
+
+        ButtonDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (v == ButtonDate) {
+                    final Calendar c = Calendar.getInstance();
+                    mYear = c.get(Calendar.YEAR);
+                    mMonth = c.get(Calendar.MONTH);
+                    mDay = c.get(Calendar.DAY_OF_MONTH);
+
+
+                    DatePickerDialog datePickerDialog = new DatePickerDialog(Main2Activity.this, new DatePickerDialog.OnDateSetListener() {
+                        @Override
+                        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                            String dd = dayOfMonth + "-" + (month + 1) + "-" + year;
+                            DatePick.setText(dd);
+
+                        }
+                    }, mYear, mMonth, mDay);
+                    datePickerDialog.show();
+                }
+            }
+        });
 
 
         DatabaseReference rev = stat.child("Status").getRef();
@@ -84,18 +122,12 @@ public class Main2Activity extends AppCompatActivity  {
         DatabaseReference PayStat = stat.child("PStatus").getRef();
 
 
-
-
-
-
-
-
         //Billing spin
         bl.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 final List<String> pr1 = new ArrayList<>();
-                for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren() ){
+                for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
                     String prname1 = childDataSnapshot.getValue(String.class);
                     pr1.add(prname1);
                     ArrayAdapter<String> pradp1 = new ArrayAdapter<>(Main2Activity.this, R.layout.support_simple_spinner_dropdown_item, pr1);
@@ -114,7 +146,7 @@ public class Main2Activity extends AppCompatActivity  {
         PayStat.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                final  List<String> pay1 = new ArrayList<>();
+                final List<String> pay1 = new ArrayList<>();
 
                 for (DataSnapshot childDataSnapShot : dataSnapshot.getChildren()) {
                     String stpay = childDataSnapShot.getValue(String.class);
@@ -138,7 +170,7 @@ public class Main2Activity extends AppCompatActivity  {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 final List<String> pr = new ArrayList<>();
-                for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren() ){
+                for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
                     String prname = childDataSnapshot.getValue(String.class);
                     pr.add(prname);
                     ArrayAdapter<String> pradp = new ArrayAdapter<>(Main2Activity.this, R.layout.support_simple_spinner_dropdown_item, pr);
@@ -181,11 +213,11 @@ public class Main2Activity extends AppCompatActivity  {
         spinSer.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                final  List<String>  ServS = new ArrayList<>();
+                final List<String> ServS = new ArrayList<>();
 
                 ServiceSpin = findViewById(R.id.ServiceSpin);
-                for ( DataSnapshot childDataSnapshot : dataSnapshot.getChildren()){
-                   ServiceSpin = findViewById(R.id.ServiceSpin);
+                for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
+                    ServiceSpin = findViewById(R.id.ServiceSpin);
                     String SerSpin = childDataSnapshot.getValue(String.class);
                     ServS.add(SerSpin);
 
@@ -204,15 +236,12 @@ public class Main2Activity extends AppCompatActivity  {
         spinS.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-              final   List<String> Aspin = new ArrayList<>();
+                final List<String> Aspin = new ArrayList<>();
                 AssignSpin = findViewById(R.id.AssignSpin);
-                for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
                     String Astr = childDataSnapshot.getValue(String.class);
                     Aspin.add(Astr);
                     AssignSpin.setItems(Aspin);
-
-
-
 
 
                 }
@@ -245,109 +274,84 @@ public class Main2Activity extends AppCompatActivity  {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
 
-
-
-
-
             }
         });
 
 
+//        BPickDate1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (v == BPickDate1) {
+//                    final Calendar c = Calendar.getInstance();
+//                    mYear = c.get(Calendar.YEAR);
+//                    mMonth = c.get(Calendar.MONTH);
+//                    mDay = c.get(Calendar.DAY_OF_MONTH);
+//
+//
+//
+//                    DatePickerDialog datePickerDialog = new DatePickerDialog(Main2Activity.this, new DatePickerDialog.OnDateSetListener() {
+//                        @Override
+//                        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+//                            DatePick.setText(dayOfMonth + "-" + (month + 1) + "-" + year);
+//
+//                        }
+//                    }, mYear, mMonth, mDay);
+//                    datePickerDialog.show();
+//                }
+//            }
+//        });
 
-        mSignaturePad = findViewById(R.id.signature_pad);
-
-        DatePick = findViewById(R.id.DatePick);
-
-        AreaSpin = findViewById(R.id.Areaspin);
-        Name1 = findViewById(R.id.Name1);
-        Name2 = findViewById(R.id.Name2);
-        Remarks = findViewById(R.id.Remarks);
-        InfoSer = findViewById(R.id.InfoSer);
-        Number1 = findViewById(R.id.Number1);
-        Area1 = findViewById(R.id.Area1);
-        DataAdd = findViewById(R.id.DataAdd);
-        BPickDate1 = findViewById(R.id.BPickDate1);
-        StatusSpin = findViewById(R.id.StatusSpin);
-        BillSpin = findViewById(R.id.BillSpin);
-        PrioritySpin = findViewById(R.id.PrioritySpin);
-        PaymentSpin = findViewById(R.id.PaymentSpin);
-        SubButton = findViewById(R.id.SubButton);
-        TestPad = findViewById(R.id.TestPad);
-
-        String date1= new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+        String date1 = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
         DatePick.setText(date1);
-
-        BPickDate1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (v == BPickDate1) {
-                    final Calendar c = Calendar.getInstance();
-                    mYear = c.get(Calendar.YEAR);
-                    mMonth = c.get(Calendar.MONTH);
-                    mDay = c.get(Calendar.DAY_OF_MONTH);
-
-
-
-                    DatePickerDialog datePickerDialog = new DatePickerDialog(Main2Activity.this, new DatePickerDialog.OnDateSetListener() {
-                        @Override
-                        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                            DatePick.setText(dayOfMonth + "-" + (month + 1) + "-" + year);
-
-                        }
-                    }, mYear, mMonth, mDay);
-                    datePickerDialog.show();
-                }
-            }
-        });
 
         DataAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if ( v == DataAdd)
-                {
+                if (v == DataAdd) {
                     AddData();
                 }
             }
         });
-
-        SubButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (v == SubButton) {
-
-
-                    Bitmap bm = mSignaturePad.getSignatureBitmap();
-
-                   // TestPad.setImageBitmap(bm);
-                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                    bm.compress(Bitmap.CompressFormat.PNG, 50, byteArrayOutputStream);
-                    byte [] bytes11 = byteArrayOutputStream.toByteArray();
-                    String bst = android.util.Base64.encodeToString(bytes11, android.util.Base64.DEFAULT);
-                   // StorageReference grs= mStoreage.child("Images");
-                    DatabaseReference trss = database.getReference("Image");
-                    trss.setValue(bst);
-                    trss.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            String sss = dataSnapshot.getValue(String.class);
-
-                            byte[] dcdstr = android.util.Base64.decode(sss, android.util.Base64.DEFAULT);
-                            Bitmap bmssc = BitmapFactory.decodeByteArray(dcdstr, 0, dcdstr.length);
-                           TestPad.setImageBitmap(bmssc);
-                            String tryyu = AssignSpin.toString();
-                            if (tryyu.contains("Amit Soni")){
-                                Toast.makeText(Main2Activity.this, "Amit soni is here", Toast.LENGTH_LONG).show();
-                            }
-                            else {
-                                Toast.makeText(Main2Activity.this, "Not found ", Toast.LENGTH_LONG).show();
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
+    }
+//
+//        SubButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (v == SubButton) {
+//
+//
+//                    Bitmap bm = mSignaturePad.getSignatureBitmap();
+//
+//                   // TestPad.setImageBitmap(bm);
+//                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//                    bm.compress(Bitmap.CompressFormat.PNG, 50, byteArrayOutputStream);
+//                    byte [] bytes11 = byteArrayOutputStream.toByteArray();
+//                    String bst = android.util.Base64.encodeToString(bytes11, android.util.Base64.DEFAULT);
+//                   // StorageReference grs= mStoreage.child("Images");
+//                    DatabaseReference trss = database.getReference("Image");
+//                    trss.setValue(bst);
+//                    trss.addValueEventListener(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                            String sss = dataSnapshot.getValue(String.class);
+//
+//                            byte[] dcdstr = android.util.Base64.decode(sss, android.util.Base64.DEFAULT);
+//                            Bitmap bmssc = BitmapFactory.decodeByteArray(dcdstr, 0, dcdstr.length);
+//                           TestPad.setImageBitmap(bmssc);
+//                            String tryyu = AssignSpin.toString();
+//                            if (tryyu.contains("Amit Soni")){
+//                                Toast.makeText(Main2Activity.this, "Amit soni is here", Toast.LENGTH_LONG).show();
+//                            }
+//                            else {
+//                                Toast.makeText(Main2Activity.this, "Not found ", Toast.LENGTH_LONG).show();
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                        }
+//                    });
 
 
 
@@ -381,29 +385,29 @@ public class Main2Activity extends AppCompatActivity  {
 //                    FileOutputStream fos = new FileOutputStream(ImgFile);
 //                    fos.write(bitmapdata);
 //                    fos.flush();
-
-                }
-            }
-        });
-
-
-
-
-
-
-
-
-
-
-
-
-
-    }
+//
+//                }
+//            }
+//        });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//    }
 
 
     public void AddData()
     {
-        String dt = DatePick.getText().toString().trim();
+        String dt = DatePick.getText().toString();
         String nm1 = Name1.getText().toString();
         String nm2 = Name2.getText().toString();
         String fame = nm1 + " " + nm2;
@@ -423,49 +427,24 @@ public class Main2Activity extends AppCompatActivity  {
         //   Image String
         Bitmap bm = mSignaturePad.getSignatureBitmap();
 
-        // TestPad.setImageBitmap(bm);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bm.compress(Bitmap.CompressFormat.PNG, 50, byteArrayOutputStream);
         byte [] bytes11 = byteArrayOutputStream.toByteArray();
         String bst = android.util.Base64.encodeToString(bytes11, android.util.Base64.DEFAULT);
-        // DatabaseReference reff = firebaseDatabase.getReference().getRef().child("New_Task");
-     //    DatabaseReference reef = FirebaseDatabase.getInstance().getReference("New_Task");
 
-//
-//                 String dt = DatePick.getText().toString();
-//                 String nm1 = Name1.getText().toString();
-//                 String nm2 = Name2.getText().toString();
-//                 String fame = Name1 + "_" + Name2;
-//                 String numb = Number1.getText().toString();
-//                 String Ar1 = AreaSpin.toString();
-//                 String Ar2 = Area1.toString();
-//                 String Stype = ServiceSpin.toString();
-//                 String Sinf = InfoSer.getText().toString();
-//                 String Asst = AssignSpin.toString();
-//                 String Statuss = StatusSpin.toString();
-//                 String pr = PrioritySpin.toString();
-//                 String bll = BillSpin.toString();
-//                 String pstatus = PaymentSpin.toString();
-//                 String rema = Remarks.getText().toString();
-//
-//                 //   Image String
-//                 Bitmap bm = mSignaturePad.getSignatureBitmap();
-//
-//                 // TestPad.setImageBitmap(bm);
-//                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-//                 bm.compress(Bitmap.CompressFormat.PNG, 50, byteArrayOutputStream);
-//                 byte [] bytes11 = byteArrayOutputStream.toByteArray();
-//                 String bst = android.util.Base64.encodeToString(bytes11, android.util.Base64.DEFAULT);
 
 
                 reff = FirebaseDatabase.getInstance().getReference("New Task");
 
                  String ndd = reff.push().getKey();
                  proAdd pr1 = new proAdd(dt,time1, fame, numb, arr, arrr, Stype, Sinf, asstp, statuss, pr, bll, pstatus, rema, bst, ndd);
-                 reff.child(ndd).setValue(pr1);
+        assert ndd != null;
+        reff.child(ndd).setValue(pr1);
                  Toast.makeText(Main2Activity.this, "Task Added", Toast.LENGTH_LONG).show();
 
              }
+
+
 
     }
 
