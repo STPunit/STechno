@@ -5,7 +5,6 @@
     android:id="@+id/scroll1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
     tools:context=".Main2Activity">
 
     <LinearLayout
@@ -13,11 +12,13 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:orientation="vertical"
+        android:background="#f4f4f7"
         android:padding="3dp">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#efeff4"
             android:layout_margin="10dp"
             android:orientation="horizontal">
 
@@ -54,6 +55,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
                 android:background="@drawable/cal"
                 />
 
@@ -62,9 +64,10 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:background="#efeff4"
             android:orientation="horizontal">
 
             <TextView
@@ -84,7 +87,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginEnd="10dp"
                 android:layout_marginBottom="5dp"
                 android:hint="@string/first_name"
                 android:inputType="textCapCharacters"
@@ -94,7 +96,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/Name2"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="5dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="5dp"
@@ -105,8 +107,9 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#efeff4"
             android:layout_margin="10dp"
             android:orientation="horizontal">
 
@@ -136,8 +139,9 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#efeff4"
             android:layout_margin="10dp"
             android:orientation="horizontal">
 
@@ -165,8 +169,9 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#efeff4"
             android:layout_margin="10dp"
             android:orientation="horizontal">
 
@@ -187,14 +192,15 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:hint="@string/address"
-                android:inputType="number|text"
+                android:inputType="text"
                 android:padding="3dp" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#efeff4"
             android:layout_margin="10dp"
             android:orientation="horizontal">
 
@@ -222,7 +228,8 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_margin="10dp"
-            android:layout_width="wrap_content"
+            android:background="#efeff4"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
@@ -243,14 +250,15 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:inputType="number|text"
+                android:inputType="text"
                 android:hint="@string/service_info"
                 android:padding="3dp" />
 
         </LinearLayout>
         <LinearLayout
             android:layout_margin="10dp"
-            android:layout_width="wrap_content"
+            android:background="#efeff4"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
@@ -276,8 +284,9 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#efeff4"
             android:layout_margin="10dp"
             android:orientation="horizontal">
 
@@ -304,8 +313,9 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#efeff4"
             android:layout_margin="10dp"
             android:orientation="horizontal">
 
@@ -332,8 +342,9 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#efeff4"
             android:layout_margin="10dp"
             android:orientation="horizontal">
 
@@ -360,8 +371,9 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#efeff4"
             android:layout_margin="10dp"
             android:orientation="horizontal">
 
@@ -389,7 +401,8 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_margin="10dp"
-            android:layout_width="wrap_content"
+            android:background="#efeff4"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
@@ -416,10 +429,13 @@
         </LinearLayout>
         <LinearLayout
             android:layout_margin="10dp"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:background="#efeff4"
+            android:orientation="horizontal"
             android:layout_height="wrap_content">
 
-            <TextView
+            <Button
+                android:id="@+id/btnIm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
@@ -427,29 +443,25 @@
                 android:layout_marginBottom="5dp"
                 android:padding="3dp"
                 android:text="@string/image"
-                android:textSize="16sp" />
+                android:textAllCaps="false" />
 
-            <EditText
-                android:layout_width="140dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="57dp"
+            <ImageView
+                android:id="@+id/ImgView"
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:hint="@string/image_path"
+                android:inputType=""
                 android:padding="3dp"
-                android:inputType="" />
+                tools:ignore="contentDescription" />
 
-            <Button
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/uploadicon"/>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_margin="10dp"
-            android:layout_width="wrap_content"
+            android:background="#efeff4"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
@@ -466,6 +478,7 @@
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/signature_pad"
+                android:layout_marginStart="17dp"
                 android:layout_width="match_parent"
                 android:background="@drawable/shape"
                 android:layout_height="140dp"
@@ -479,6 +492,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="#efeff4"
             android:layout_margin="10dp"
             android:orientation="vertical">
 

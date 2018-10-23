@@ -1,10 +1,16 @@
 package com.example.desktop.stechno;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
+import android.content.ContentValues;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.Image;
+import android.net.Uri;
+import android.os.Build;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -38,19 +44,18 @@ import io.apptik.widget.multiselectspinner.MultiSelectSpinner;
 
 public class Main2Activity extends AppCompatActivity  {
 
+    private static final int CREATE_CAPTURE_CODE = 1000;
+    private static final int PERMISSION_CODE = 1000;
     EditText DatePick, Name1, Name2, Remarks, Number1, Area1, InfoSer;
     int mYear, mMonth, mDay;
     SignaturePad mSignaturePad;
-    Image pr;
     StorageReference mStoreage;
-    ImageView TestPad;
+    ImageView ImgView;
     DatabaseReference  reff;
-
-
-    Button SubButton, DataAdd, ButtonDate;
+    Uri Image_uri;
+    Button btnIm, DataAdd, ButtonDate;
     Spinner AreaSpin, StatusSpin, PrioritySpin, BillSpin, PaymentSpin;
     MultiSelectSpinner ServiceSpin, AssignSpin;
-
 
 
 
@@ -67,11 +72,10 @@ public class Main2Activity extends AppCompatActivity  {
 
 
         final DatabaseReference stat = database.getReference();
-
         mSignaturePad = findViewById(R.id.signature_pad);
-
         DatePick = findViewById(R.id.DatePick);
-
+        btnIm = findViewById(R.id.btnIm);
+        ImgView = findViewById(R.id.ImgView);
         AreaSpin = findViewById(R.id.Areaspin);
         Name1 = findViewById(R.id.Name1);
         Name2 = findViewById(R.id.Name2);
@@ -84,8 +88,6 @@ public class Main2Activity extends AppCompatActivity  {
         BillSpin = findViewById(R.id.BillSpin);
         PrioritySpin = findViewById(R.id.PrioritySpin);
         PaymentSpin = findViewById(R.id.PaymentSpin);
-//        SubButton = findViewById(R.id.SubButton);
-//        TestPad = findViewById(R.id.TestPad);
         ButtonDate = findViewById(R.id.ButtonDate);
 
 
@@ -111,6 +113,8 @@ public class Main2Activity extends AppCompatActivity  {
                 }
             }
         });
+
+
 
 
         DatabaseReference rev = stat.child("Status").getRef();
@@ -140,6 +144,39 @@ public class Main2Activity extends AppCompatActivity  {
 
             }
         });
+
+        //Taking image from camera
+        btnIm.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.M){
+                    if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED ||
+                            checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
+                        String [] permission = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                        requestPermissions(permission, PERMISSION_CODE);
+                    }
+                    else {
+                        //permission already granteerd
+                        openCamera();
+                    }
+
+
+                    }
+                    else {
+                    // sdk < mashmallow
+                    openCamera();
+                }
+
+
+            }
+
+
+        });
+
+
+
+
 
         //PAyment Spin
 
@@ -278,28 +315,6 @@ public class Main2Activity extends AppCompatActivity  {
         });
 
 
-//        BPickDate1.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (v == BPickDate1) {
-//                    final Calendar c = Calendar.getInstance();
-//                    mYear = c.get(Calendar.YEAR);
-//                    mMonth = c.get(Calendar.MONTH);
-//                    mDay = c.get(Calendar.DAY_OF_MONTH);
-//
-//
-//
-//                    DatePickerDialog datePickerDialog = new DatePickerDialog(Main2Activity.this, new DatePickerDialog.OnDateSetListener() {
-//                        @Override
-//                        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-//                            DatePick.setText(dayOfMonth + "-" + (month + 1) + "-" + year);
-//
-//                        }
-//                    }, mYear, mMonth, mDay);
-//                    datePickerDialog.show();
-//                }
-//            }
-//        });
 
         String date1 = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
         DatePick.setText(date1);
@@ -313,96 +328,47 @@ public class Main2Activity extends AppCompatActivity  {
             }
         });
     }
-//
-//        SubButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (v == SubButton) {
-//
-//
-//                    Bitmap bm = mSignaturePad.getSignatureBitmap();
-//
-//                   // TestPad.setImageBitmap(bm);
-//                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-//                    bm.compress(Bitmap.CompressFormat.PNG, 50, byteArrayOutputStream);
-//                    byte [] bytes11 = byteArrayOutputStream.toByteArray();
-//                    String bst = android.util.Base64.encodeToString(bytes11, android.util.Base64.DEFAULT);
-//                   // StorageReference grs= mStoreage.child("Images");
-//                    DatabaseReference trss = database.getReference("Image");
-//                    trss.setValue(bst);
-//                    trss.addValueEventListener(new ValueEventListener() {
-//                        @Override
-//                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                            String sss = dataSnapshot.getValue(String.class);
-//
-//                            byte[] dcdstr = android.util.Base64.decode(sss, android.util.Base64.DEFAULT);
-//                            Bitmap bmssc = BitmapFactory.decodeByteArray(dcdstr, 0, dcdstr.length);
-//                           TestPad.setImageBitmap(bmssc);
-//                            String tryyu = AssignSpin.toString();
-//                            if (tryyu.contains("Amit Soni")){
-//                                Toast.makeText(Main2Activity.this, "Amit soni is here", Toast.LENGTH_LONG).show();
-//                            }
-//                            else {
-//                                Toast.makeText(Main2Activity.this, "Not found ", Toast.LENGTH_LONG).show();
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//                        }
-//                    });
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode){
+            case PERMISSION_CODE:{
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    //permission from popup wa granted
+                    openCamera();
+                }
+                else {
+                    //permission from pouup denied
+                    Toast.makeText(Main2Activity.this, "Permission denied", Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+    }
 
 
 
+    private void openCamera() {
+
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.TITLE, "New Pictutre");
+        values.put(MediaStore.Images.Media.DESCRIPTION, "From the Camera");
+        Image_uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Image_uri);
+        startActivityForResult(intent, CREATE_CAPTURE_CODE);
 
 
+    }
 
-
-
-
-
-
-
-
-
-
-
-//                    Uri uri  = Uri.fromFile(new Bitmap(mSignaturePad.getSignatureBitmap()));
-//
-//
-//                    StorageReference filepath = mStoreage.child("Photos").child(bm.toString());
-//                    filepath.putFile(bm, filepath);
-//                    File f = new File("path");
-//
-//
-//
-//
-//
-//                    ByteArrayOutputStream pht = new ByteArrayOutputStream();
-//                    bm.compress(Bitmap.CompressFormat.PNG, 0, pht);
-//                    byte[] bitmapdata = pht.toByteArray();
-//                    FileOutputStream fos = new FileOutputStream(ImgFile);
-//                    fos.write(bitmapdata);
-//                    fos.flush();
-//
-//                }
-//            }
-//        });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (resultCode ==RESULT_OK){
+            ImgView.setImageURI(Image_uri);
+        }
+        else {
+            Toast.makeText(Main2Activity.this, "Uri is not set", Toast.LENGTH_LONG).show();
+        }
+    }
 
 
     public void AddData()

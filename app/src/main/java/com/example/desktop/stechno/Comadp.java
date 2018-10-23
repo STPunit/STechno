@@ -17,10 +17,11 @@ import java.util.ArrayList;
 public class Comadp extends RecyclerView.Adapter<Comadp.Comhol> {
 
    Context context;
-   ArrayList<ContactsContract.Profile> profiles;
-   public Comadp(Context c, ArrayList<ContactsContract.Profile> p){
+   ArrayList<tasks> profiles;
+   public Comadp(Context c, ArrayList<tasks> p){
        context = c;
        profiles = p;
+
    }
 
 
@@ -35,7 +36,11 @@ public class Comadp extends RecyclerView.Adapter<Comadp.Comhol> {
 
     @Override
     public void onBindViewHolder(@NonNull  Comhol comhol,  int i) {
-   // comhol.txtName.setText(profiles.g);
+    comhol.txtName.setText(profiles.get(i).getTaskName());
+    comhol.txtTask.setText(profiles.get(i).getTaskServiceType());
+    comhol.txtStatus.setText(profiles.get(i).getTaskPriority());
+    comhol.txtAssign.setText(profiles.get(i).getTaskAssignedTo());
+
 
     }
 
