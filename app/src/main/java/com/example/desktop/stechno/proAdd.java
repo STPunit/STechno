@@ -7,6 +7,7 @@ public class proAdd {
     String TaskNumber;
     String TaskArea;
     String TaskAreaLine;
+    String TaskImage;
     String TaskServiceType;
     String TaskServiceInfo;
     String TaskAssignedTo;
@@ -23,13 +24,14 @@ public class proAdd {
 
     }
 
-    public proAdd(String taskDate, String taskTime, String taskName, String taskNumber, String taskArea, String taskAreaLine, String taskServiceType, String taskServiceInfo, String taskAssignedTo, String taskStatus, String taskPriority, String taskBilled, String taskPaymentStatus, String taskRemarks, String taskSignature, String taskId) {
+    public proAdd(String taskDate, String taskTime, String taskName, String taskNumber, String taskArea, String taskAreaLine, String taskImage, String taskServiceType, String taskServiceInfo, String taskAssignedTo, String taskStatus, String taskPriority, String taskBilled, String taskPaymentStatus, String taskRemarks, String taskSignature, String taskId) {
         TaskDate = taskDate;
         TaskTime = taskTime;
         TaskName = taskName;
         TaskNumber = taskNumber;
         TaskArea = taskArea;
         TaskAreaLine = taskAreaLine;
+        TaskImage = taskImage;
         TaskServiceType = taskServiceType;
         TaskServiceInfo = taskServiceInfo;
         TaskAssignedTo = taskAssignedTo;
@@ -64,6 +66,10 @@ public class proAdd {
 
     private String getTaskAreaLine() {
         return TaskAreaLine;
+    }
+
+    private String getTaskImage() {
+        return TaskImage;
     }
 
     private String getTaskServiceType() {

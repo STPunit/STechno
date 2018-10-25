@@ -2,27 +2,36 @@ package com.example.desktop.stechno;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
+import android.os.RecoverySystem;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.github.gcacace.signaturepad.views.SignaturePad;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -30,8 +39,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -53,11 +66,12 @@ public class Main2Activity extends AppCompatActivity  {
     ImageView ImgView;
     DatabaseReference  reff;
     Uri Image_uri;
+    ProgressDialog progressDialog;
     Button btnIm, DataAdd, ButtonDate;
     Spinner AreaSpin, StatusSpin, PrioritySpin, BillSpin, PaymentSpin;
     MultiSelectSpinner ServiceSpin, AssignSpin;
 
-
+    String ss;
 
 
     @Override
@@ -89,7 +103,7 @@ public class Main2Activity extends AppCompatActivity  {
         PrioritySpin = findViewById(R.id.PrioritySpin);
         PaymentSpin = findViewById(R.id.PaymentSpin);
         ButtonDate = findViewById(R.id.ButtonDate);
-
+        progressDialog = new ProgressDialog(this);
 
         ButtonDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -347,7 +361,7 @@ public class Main2Activity extends AppCompatActivity  {
 
 
 
-    private void openCamera() {
+    public void openCamera() {
 
         ContentValues values = new ContentValues();
         values.put(MediaStore.Images.Media.TITLE, "New Pictutre");
@@ -358,21 +372,63 @@ public class Main2Activity extends AppCompatActivity  {
         startActivityForResult(intent, CREATE_CAPTURE_CODE);
 
 
+
     }
 
+
+
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (resultCode ==RESULT_OK){
-            ImgView.setImageURI(Image_uri);
+       //     ImgView.setImageURI(Image_uri);
+            progressDialog.setMessage("Uploading Image ...");
+            progressDialog.show();
+
+
+
+            StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+            StorageReference filepth = storageReference.child("Images").child(Image_uri.getLastPathSegment());
+            filepth.putFile(Image_uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    progressDialog.dismiss();
+                    ss = taskSnapshot.getStorage().toString();
+                    imgUrl truu = new imgUrl();
+                    truu.setSs(ss);
+                    Toast.makeText(Main2Activity.this, truu.getSs()+"Image Uploaded ...",Toast.LENGTH_LONG ).show();
+
+                }
+            });
+
         }
         else {
-            Toast.makeText(Main2Activity.this, "Uri is not set", Toast.LENGTH_LONG).show();
+            Toast.makeText(Main2Activity.this, "Image is not set", Toast.LENGTH_LONG).show();
         }
     }
+    public class imgUrl{
+        String ss;
+
+//        public imgUrl(String ss) {
+//            this.ss = ss;
+//        }
+
+        public void setSs(String ss) {
+            this.ss = ss;
+        }
+        public String getSs() {
+            return this.ss;
+        }
+
+
+    }
+
 
 
     public void AddData()
     {
+//imgUrl rr = new imgUrl();
+//Toast.makeText(Main2Activity.this, ssimg, Toast.LENGTH_LONG).show();
+
         String dt = DatePick.getText().toString();
         String nm1 = Name1.getText().toString();
         String nm2 = Name2.getText().toString();
@@ -398,12 +454,31 @@ public class Main2Activity extends AppCompatActivity  {
         byte [] bytes11 = byteArrayOutputStream.toByteArray();
         String bst = android.util.Base64.encodeToString(bytes11, android.util.Base64.DEFAULT);
 
+//        Bitmap bmi = ((BitmapDrawable) ImgView.getDrawable()).getBitmap();
+//        ByteArrayOutputStream byteArrayOutputStream1 = new ByteArrayOutputStream();
+//        bmi.compress(Bitmap.CompressFormat.PNG, 25, byteArrayOutputStream1);
+//        byte [] bytimm = byteArrayOutputStream1.toByteArray();
+//        String bytim = android.util.Base64.encodeToString(bytimm, android.util.Base64.DEFAULT);
+
+       try {
+           URL url = new URL(ss);
+         // Having issue for
+         //  Bitmap mIcon_val = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+        //   ImgView.setImageBitmap(mIcon_val);
+       }
+       catch (MalformedURLException e) {
+           e.printStackTrace();
+       }
+
+
+
+
 
 
                 reff = FirebaseDatabase.getInstance().getReference("New Task");
 
                  String ndd = reff.push().getKey();
-                 proAdd pr1 = new proAdd(dt,time1, fame, numb, arr, arrr, Stype, Sinf, asstp, statuss, pr, bll, pstatus, rema, bst, ndd);
+                 proAdd pr1 = new proAdd(dt,time1, fame, numb, arr, arrr, ss , Stype, Sinf, asstp, statuss, pr, bll, pstatus, rema, bst, ndd);
         assert ndd != null;
         reff.child(ndd).setValue(pr1);
                  Toast.makeText(Main2Activity.this, "Task Added", Toast.LENGTH_LONG).show();
