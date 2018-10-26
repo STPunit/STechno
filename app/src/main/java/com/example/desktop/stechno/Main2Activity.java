@@ -30,8 +30,10 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.github.gcacace.signaturepad.views.SignaturePad;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -42,15 +44,21 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import javax.net.ssl.HttpsURLConnection;
 
 import io.apptik.widget.multiselectspinner.MultiSelectSpinner;
 
@@ -70,7 +78,7 @@ public class Main2Activity extends AppCompatActivity  {
     Button btnIm, DataAdd, ButtonDate;
     Spinner AreaSpin, StatusSpin, PrioritySpin, BillSpin, PaymentSpin;
     MultiSelectSpinner ServiceSpin, AssignSpin;
-
+    Uri imguri;
     String ss;
 
 
@@ -381,21 +389,33 @@ public class Main2Activity extends AppCompatActivity  {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (resultCode ==RESULT_OK){
        //     ImgView.setImageURI(Image_uri);
-            progressDialog.setMessage("Uploading Image ...");
+
+            progressDialog.setMessage("Uploading Image ..." );
             progressDialog.show();
 
 
 
             StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-            StorageReference filepth = storageReference.child("Images").child(Image_uri.getLastPathSegment());
+            StorageReference filepth = storageReference.child("Images").child(Image_uri.getSchemeSpecificPart());
             filepth.putFile(Image_uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+
+
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     progressDialog.dismiss();
-                    ss = taskSnapshot.getStorage().toString();
-                    imgUrl truu = new imgUrl();
-                    truu.setSs(ss);
-                    Toast.makeText(Main2Activity.this, truu.getSs()+"Image Uploaded ...",Toast.LENGTH_LONG ).show();
+                    Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl();
+                    while (!urlTask.isSuccessful());
+                    imguri = urlTask.getResult();
+
+                    ss = imguri.toString();
+                    ImgView.setImageURI(Image_uri);
+
+
+                    //Imge view with glide
+                 //   Glide.with(Main2Activity.this).load(ss).into(ImgView);
+
+
+                    Toast.makeText(Main2Activity.this, ss,Toast.LENGTH_LONG ).show();
 
                 }
             });
@@ -404,22 +424,6 @@ public class Main2Activity extends AppCompatActivity  {
         else {
             Toast.makeText(Main2Activity.this, "Image is not set", Toast.LENGTH_LONG).show();
         }
-    }
-    public class imgUrl{
-        String ss;
-
-//        public imgUrl(String ss) {
-//            this.ss = ss;
-//        }
-
-        public void setSs(String ss) {
-            this.ss = ss;
-        }
-        public String getSs() {
-            return this.ss;
-        }
-
-
     }
 
 
@@ -454,21 +458,6 @@ public class Main2Activity extends AppCompatActivity  {
         byte [] bytes11 = byteArrayOutputStream.toByteArray();
         String bst = android.util.Base64.encodeToString(bytes11, android.util.Base64.DEFAULT);
 
-//        Bitmap bmi = ((BitmapDrawable) ImgView.getDrawable()).getBitmap();
-//        ByteArrayOutputStream byteArrayOutputStream1 = new ByteArrayOutputStream();
-//        bmi.compress(Bitmap.CompressFormat.PNG, 25, byteArrayOutputStream1);
-//        byte [] bytimm = byteArrayOutputStream1.toByteArray();
-//        String bytim = android.util.Base64.encodeToString(bytimm, android.util.Base64.DEFAULT);
-
-       try {
-           URL url = new URL(ss);
-         // Having issue for
-         //  Bitmap mIcon_val = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-        //   ImgView.setImageBitmap(mIcon_val);
-       }
-       catch (MalformedURLException e) {
-           e.printStackTrace();
-       }
 
 
 
@@ -481,7 +470,7 @@ public class Main2Activity extends AppCompatActivity  {
                  proAdd pr1 = new proAdd(dt,time1, fame, numb, arr, arrr, ss , Stype, Sinf, asstp, statuss, pr, bll, pstatus, rema, bst, ndd);
         assert ndd != null;
         reff.child(ndd).setValue(pr1);
-                 Toast.makeText(Main2Activity.this, "Task Added", Toast.LENGTH_LONG).show();
+       Toast.makeText(Main2Activity.this, "Task Added", Toast.LENGTH_LONG).show();
 
              }
 

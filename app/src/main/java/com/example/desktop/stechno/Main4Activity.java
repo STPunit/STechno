@@ -1,11 +1,14 @@
 package com.example.desktop.stechno;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -19,7 +22,7 @@ public class Main4Activity extends AppCompatActivity {
 
 
 DatabaseReference databaseReference;
-ArrayList<tasks> list;
+ArrayList<Profile> list;
 Comadp comadp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,13 +33,14 @@ Comadp comadp;
         databaseReference = FirebaseDatabase.getInstance().getReference().child("New Task");
         Query query = databaseReference.orderByChild("TaskStatus").equalTo("COMPLETED");
 
+
         Taskcom.setLayoutManager(new LinearLayoutManager(this));
-        list = new  ArrayList<tasks>();
+        list = new  ArrayList<Profile>();
 
 //        databaseReference.addValueEventListener(new ValueEventListener() {
 //            @Override
 //            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+//                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChild ren()){
 //                    String ss  = dataSnapshot1.getKey();
 //                }
 //            }
@@ -46,18 +50,31 @@ Comadp comadp;
 //
 //            }
 //        }
-        ValueEventListener eventListener = new ValueEventListener() {
+        ChildEventListener childEventListener = new ChildEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                tasks p = dataSnapshot.getValue(tasks.class);
-                list.add(p);
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                //for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    Profile p = dataSnapshot.getValue(Profile.class);
+                    list.add(p);
+              //  }
                 comadp = new Comadp(Main4Activity.this, list);
                 Taskcom.setAdapter(comadp);
 
-//                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
-//
-//                }
+            }
+
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
             }
 
@@ -65,7 +82,32 @@ Comadp comadp;
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        }; query.addValueEventListener(eventListener);
+        };query.addChildEventListener(childEventListener);
+
+//        ValueEventListener eventListener = new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+//                    Profile p = dataSnapshot.getValue(Profile.class);
+//                    list.add(p);
+//                }
+//                comadp = new Comadp(Main4Activity.this, list);
+//                Taskcom.setAdapter(comadp);
+//
+//
+//
+////                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+////
+////                }
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        }; query.addValueEventListener(eventListener);
+
 
     }
 }

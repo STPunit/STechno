@@ -15,8 +15,8 @@ import java.util.ArrayList;
 public class Comadp extends RecyclerView.Adapter<Comadp.Comhol> {
 
    Context context;
-   ArrayList<tasks> profiles;
-   public  Comadp(Context c, ArrayList<tasks> p){
+   ArrayList<Profile> profiles;
+   public  Comadp(Context c, ArrayList<Profile> p){
        context = c;
        profiles = p;
 
@@ -44,8 +44,6 @@ public class Comadp extends RecyclerView.Adapter<Comadp.Comhol> {
 
     @Override
     public int getItemCount() {
-
-
 
 
 
