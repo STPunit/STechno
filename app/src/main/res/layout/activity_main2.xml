@@ -18,7 +18,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#efeff4"
+            android:background="@drawable/roundlayoutt"
             android:layout_margin="10dp"
             android:orientation="horizontal">
 
@@ -67,7 +67,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:background="#efeff4"
+            android:background="@drawable/roundlayoutt"
             android:orientation="horizontal">
 
             <TextView
@@ -109,7 +109,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#efeff4"
+            android:background="@drawable/roundlayoutt"
             android:layout_margin="10dp"
             android:orientation="horizontal">
 
@@ -141,7 +141,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#efeff4"
+            android:background="@drawable/roundlayoutt"
             android:layout_margin="10dp"
             android:orientation="horizontal">
 
@@ -171,7 +171,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#efeff4"
+            android:background="@drawable/roundlayoutt"
             android:layout_margin="10dp"
             android:orientation="horizontal">
 
@@ -200,7 +200,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#efeff4"
+            android:background="@drawable/roundlayoutt"
             android:layout_margin="10dp"
             android:orientation="horizontal">
 
@@ -228,7 +228,7 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_margin="10dp"
-            android:background="#efeff4"
+            android:background="@drawable/roundlayoutt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -257,7 +257,7 @@
         </LinearLayout>
         <LinearLayout
             android:layout_margin="10dp"
-            android:background="#efeff4"
+            android:background="@drawable/roundlayoutt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -286,7 +286,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#efeff4"
+            android:background="@drawable/roundlayoutt"
             android:layout_margin="10dp"
             android:orientation="horizontal">
 
@@ -315,7 +315,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#efeff4"
+            android:background="@drawable/roundlayoutt"
             android:layout_margin="10dp"
             android:orientation="horizontal">
 
@@ -344,7 +344,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#efeff4"
+            android:background="@drawable/roundlayoutt"
             android:layout_margin="10dp"
             android:orientation="horizontal">
 
@@ -373,7 +373,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#efeff4"
+            android:background="@drawable/roundlayoutt"
             android:layout_margin="10dp"
             android:orientation="horizontal">
 
@@ -401,7 +401,7 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_margin="10dp"
-            android:background="#efeff4"
+            android:background="@drawable/roundlayoutt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -430,7 +430,7 @@
         <LinearLayout
             android:layout_margin="10dp"
             android:layout_width="match_parent"
-            android:background="#efeff4"
+            android:background="@drawable/roundlayoutt"
             android:orientation="horizontal"
             android:layout_height="wrap_content">
 
@@ -439,9 +439,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="4dp"
                 android:layout_marginBottom="5dp"
+                android:layout_marginEnd="5dp"
                 android:padding="3dp"
+                android:background="@drawable/roundlayoutt"
                 android:text="@string/image"
                 android:textAllCaps="false" />
 
@@ -451,8 +453,8 @@
                 android:layout_height="140dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:inputType=""
                 android:padding="3dp"
+                android:background="@drawable/shape"
                 tools:ignore="contentDescription" />
 
 
@@ -460,8 +462,9 @@
 
         <LinearLayout
             android:layout_margin="10dp"
-            android:background="#efeff4"
+            android:background="@drawable/roundlayoutt"
             android:layout_width="match_parent"
+
             android:layout_height="wrap_content">
 
             <TextView
@@ -492,7 +495,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#efeff4"
+            android:background="@drawable/roundlayoutt"
             android:layout_margin="10dp"
             android:orientation="vertical">
 

@@ -2,10 +2,10 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_marginStart="10dp"
     android:orientation="vertical"
+    android:layout_margin="10dp"
     android:layout_marginBottom="15dp"
-    android:background="#e9e4e4"
+    android:background="@drawable/roundlayoutt"
     android:layout_height="wrap_content">
 
 

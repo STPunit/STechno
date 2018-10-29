@@ -15,31 +15,59 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+
+
 public class Main3Activity extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
 
-    TextView TaskCom, TaskPen, TaskPro,comid;
+    TextView TaskCom, TaskPen, TaskPro,comid,Progid, Pendid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
 
-      DatabaseReference tsk = FirebaseDatabase.getInstance().getReference();
-      DatabaseReference tsk1 = tsk.child("New Task").getRef();
+      final DatabaseReference tsk = FirebaseDatabase.getInstance().getReference();
+      final DatabaseReference tsk1 = tsk.child("New Task").getRef();
+
 
 
       TaskCom = findViewById(R.id.TaskCom);
       TaskPen = findViewById(R.id.TaskPen);
       TaskPro = findViewById(R.id.TaskPro);
       comid = findViewById(R.id.comid);
+      Progid = findViewById(R.id.Progid);
+      Pendid = findViewById(R.id.Pendid);
+
      comid.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View v) {
+          Query  query =tsk1.orderByChild("TaskStatus").equalTo("COMPLETED");
              Intent i = new Intent(Main3Activity.this,Main4Activity.class);
              startActivity(i);
+
          }
      });
+     Pendid.setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick(View v) {
+         Query   query = tsk1.orderByChild("TaskStatus").equalTo("PENDING");
+             Intent i = new Intent(Main3Activity.this,Main4Activity.class);
+             startActivity(i);
+
+         }
+     });
+        Progid.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+        Query   query = tsk1.orderByChild("TaskStatus").equalTo("In_Progress");
+                Intent i = new Intent(Main3Activity.this,Main4Activity.class);
+                startActivity(i);
+
+            }
+        });
+
+
 
         DatabaseReference rootref = tsk.child("New Task");
         Query query = rootref.orderByChild("TaskStatus").equalTo("COMPLETED");
@@ -94,7 +122,7 @@ public class Main3Activity extends AppCompatActivity {
 
             }
         };
-        query1.addListenerForSingleValueEvent(eventListener2);
+       query1.addListenerForSingleValueEvent(eventListener2);
 
 
 

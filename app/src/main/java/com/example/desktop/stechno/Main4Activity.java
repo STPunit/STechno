@@ -1,8 +1,6 @@
 package com.example.desktop.stechno;
-
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,11 +12,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-
-public class Main4Activity extends AppCompatActivity {
+public class Main4Activity extends Main3Activity {
 
 
 DatabaseReference databaseReference;
@@ -29,34 +25,36 @@ Comadp comadp;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main4);
 
+
         final RecyclerView Taskcom = findViewById(R.id.Taskcom);
+
+
         databaseReference = FirebaseDatabase.getInstance().getReference().child("New Task");
         Query query = databaseReference.orderByChild("TaskStatus").equalTo("COMPLETED");
+//        Query query1 = databaseReference.orderByChild("TaskStatus").equalTo("PENDING");
+//        Query query2 = databaseReference.orderByChild("TaskStatus").equalTo("In_Progress");
 
 
         Taskcom.setLayoutManager(new LinearLayoutManager(this));
         list = new  ArrayList<Profile>();
-
-//        databaseReference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChild ren()){
-//                    String ss  = dataSnapshot1.getKey();
-//                }
-//            }
+//        if (Taskcom.isSelected()) {
 //
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//             query = databaseReference.orderByChild("TaskStatus").equalTo("COMPLETED");
 //
-//            }
 //        }
+//        else if (TaskPen.isSelected()){
+//             query = databaseReference.orderByChild("TaskStatus").equalTo("PENDING");
+//        }
+//        else {
+//             query = databaseReference.orderByChild("TaskStatus").equalTo("In_Progress");
+//        }
+
+
         ChildEventListener childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                //for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     Profile p = dataSnapshot.getValue(Profile.class);
                     list.add(p);
-              //  }
                 comadp = new Comadp(Main4Activity.this, list);
                 Taskcom.setAdapter(comadp);
 
@@ -82,32 +80,13 @@ Comadp comadp;
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        };query.addChildEventListener(childEventListener);
+        };
+        query.addChildEventListener(childEventListener);
 
-//        ValueEventListener eventListener = new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-//                    Profile p = dataSnapshot.getValue(Profile.class);
-//                    list.add(p);
-//                }
-//                comadp = new Comadp(Main4Activity.this, list);
-//                Taskcom.setAdapter(comadp);
-//
-//
-//
-////                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
-////
-////                }
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        }; query.addValueEventListener(eventListener);
-
+//    if(TaskPen.hasSelection()){
+//        query1.addChildEventListener(childEventListener);
+//    }
+//    ;
 
     }
 }
