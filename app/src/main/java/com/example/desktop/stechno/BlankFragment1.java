@@ -108,6 +108,7 @@ public class BlankFragment1 extends Fragment {
                Comadp comadp = new Comadp(BlankFragment1.this.getContext(), list);
                 Taskcom1.setAdapter(comadp);
 
+
             }
 
             @Override
@@ -130,6 +131,7 @@ public class BlankFragment1 extends Fragment {
 
             }
         };query.addChildEventListener(childEventListener);
+
 
 
     return view;

@@ -1,23 +1,23 @@
 package com.example.desktop.stechno;
 
 public class proAdd {
-    String TaskDate;
-    String TaskTime;
-    String TaskName;
-    String TaskNumber;
-    String TaskArea;
-    String TaskAreaLine;
-    String TaskImage;
-    String TaskServiceType;
-    String TaskServiceInfo;
-    String TaskAssignedTo;
-    String TaskStatus;
-    String TaskPriority;
-    String TaskBilled;
-    String TaskPaymentStatus;
-    String TaskRemarks;
-    String TaskSignature;
-    String TaskId;
+    private String TaskDate;
+    private String TaskTime;
+    private String TaskName;
+    private String TaskNumber;
+    private String TaskArea;
+    private String TaskAreaLine;
+    private String TaskImage;
+    private String TaskServiceType;
+    private String TaskServiceInfo;
+    private String TaskAssignedTo;
+    private String TaskStatus;
+    private String TaskPriority;
+    private String TaskBilled;
+    private String TaskPaymentStatus;
+    private String TaskRemarks;
+    private String TaskSignature;
+    private String TaskId;
 
 
     public proAdd() {
@@ -25,91 +25,159 @@ public class proAdd {
     }
 
     public proAdd(String taskDate, String taskTime, String taskName, String taskNumber, String taskArea, String taskAreaLine, String taskImage, String taskServiceType, String taskServiceInfo, String taskAssignedTo, String taskStatus, String taskPriority, String taskBilled, String taskPaymentStatus, String taskRemarks, String taskSignature, String taskId) {
-        TaskDate = taskDate;
-        TaskTime = taskTime;
-        TaskName = taskName;
-        TaskNumber = taskNumber;
-        TaskArea = taskArea;
-        TaskAreaLine = taskAreaLine;
-        TaskImage = taskImage;
-        TaskServiceType = taskServiceType;
-        TaskServiceInfo = taskServiceInfo;
-        TaskAssignedTo = taskAssignedTo;
-        TaskStatus = taskStatus;
-        TaskPriority = taskPriority;
-        TaskBilled = taskBilled;
-        TaskPaymentStatus = taskPaymentStatus;
-        TaskRemarks = taskRemarks;
-        TaskSignature = taskSignature;
-        TaskId = taskId;
+        this.TaskDate = taskDate;
+        this.TaskTime = taskTime;
+        this.TaskName = taskName;
+        this.TaskNumber = taskNumber;
+        this.TaskArea = taskArea;
+        this.TaskAreaLine = taskAreaLine;
+        this.TaskImage = taskImage;
+        this.TaskServiceType = taskServiceType;
+        this.TaskServiceInfo = taskServiceInfo;
+        this.TaskAssignedTo = taskAssignedTo;
+        this.TaskStatus = taskStatus;
+        this.TaskPriority = taskPriority;
+        this.TaskBilled = taskBilled;
+        this.TaskPaymentStatus = taskPaymentStatus;
+        this.TaskRemarks = taskRemarks;
+        this.TaskSignature = taskSignature;
+        this.TaskId = taskId;
     }
 
-    private String getTaskDate() {
+     String getTaskDate() {
         return TaskDate;
     }
 
-    private String getTaskTime() {
+     String getTaskTime() {
         return TaskTime;
     }
 
-    private String getTaskName() {
+     String getTaskName() {
         return TaskName;
     }
 
-    private String getTaskNumber() {
+     String getTaskNumber() {
         return TaskNumber;
     }
 
-    private String getTaskArea() {
+     String getTaskArea() {
         return TaskArea;
     }
 
-    private String getTaskAreaLine() {
+     String getTaskAreaLine() {
         return TaskAreaLine;
     }
 
-    private String getTaskImage() {
+     String getTaskImage() {
         return TaskImage;
     }
 
-    private String getTaskServiceType() {
+     String getTaskServiceType() {
         return TaskServiceType;
     }
 
-    private String getTaskServiceInfo() {
+     String getTaskServiceInfo() {
         return TaskServiceInfo;
     }
 
-    private String getTaskAssignedTo() {
+     String getTaskAssignedTo() {
         return TaskAssignedTo;
     }
 
-    private String getTaskStatus() {
+     String getTaskStatus() {
         return TaskStatus;
     }
 
-    private String getTaskPriority() {
+     String getTaskPriority() {
         return TaskPriority;
     }
 
-    private String getTaskBilled() {
+     String getTaskBilled() {
         return TaskBilled;
     }
 
-    private String getTaskPaymentStatus() {
+     String getTaskPaymentStatus() {
         return TaskPaymentStatus;
     }
 
-    private String getTaskRemarks() {
+     String getTaskRemarks() {
         return TaskRemarks;
     }
 
-    private String getTaskSignature() {
+     String getTaskSignature() {
         return TaskSignature;
     }
 
-    private String getTaskId() {
+     String getTaskId() {
         return TaskId;
+    }
+
+    public void setTaskDate(String taskDate) {
+        this.TaskDate = taskDate;
+    }
+
+    public void setTaskTime(String taskTime) {
+        this.TaskTime = taskTime;
+    }
+
+    public void setTaskName(String taskName) {
+        this.TaskName = taskName;
+    }
+
+    public void setTaskNumber(String taskNumber) {
+        this.TaskNumber = taskNumber;
+    }
+
+    public void setTaskArea(String taskArea) {
+        this.TaskArea = taskArea;
+    }
+
+    public void setTaskAreaLine(String taskAreaLine) {
+        this.TaskAreaLine = taskAreaLine;
+    }
+
+    public void setTaskImage(String taskImage) {
+        this.TaskImage = taskImage;
+    }
+
+    public void setTaskServiceType(String taskServiceType) {
+        this.TaskServiceType = taskServiceType;
+    }
+
+    public void setTaskServiceInfo(String taskServiceInfo) {
+        this.TaskServiceInfo = taskServiceInfo;
+    }
+
+    public void setTaskAssignedTo(String taskAssignedTo) {
+        this.TaskAssignedTo = taskAssignedTo;
+    }
+
+    public void setTaskStatus(String taskStatus) {
+        this.TaskStatus = taskStatus;
+    }
+
+    public void setTaskPriority(String taskPriority) {
+        this.TaskPriority = taskPriority;
+    }
+
+    public void setTaskBilled(String taskBilled) {
+        this.TaskBilled = taskBilled;
+    }
+
+    public void setTaskPaymentStatus(String taskPaymentStatus) {
+        this.TaskPaymentStatus = taskPaymentStatus;
+    }
+
+    public void setTaskRemarks(String taskRemarks) {
+        this.TaskRemarks = taskRemarks;
+    }
+
+    public void setTaskSignature(String taskSignature) {
+        this.TaskSignature = taskSignature;
+    }
+
+    public void setTaskId(String taskId) {
+        this.TaskId = taskId;
     }
 }
 
