@@ -118,15 +118,21 @@ public class Main2Activity extends AppCompatActivity  {
             public void onClick(View v) {
                 if (v == ButtonDate) {
                     final Calendar c = Calendar.getInstance();
+
                     mYear = c.get(Calendar.YEAR);
                     mMonth = c.get(Calendar.MONTH);
                     mDay = c.get(Calendar.DAY_OF_MONTH);
 
 
-                    DatePickerDialog datePickerDialog = new DatePickerDialog(Main2Activity.this, new DatePickerDialog.OnDateSetListener() {
+
+                    final DatePickerDialog datePickerDialog = new DatePickerDialog(Main2Activity.this, new DatePickerDialog.OnDateSetListener() {
+
                         @Override
                         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
+
                             String dd = dayOfMonth + "-" + (month + 1) + "-" + year;
+
                             DatePick.setText(dd);
 
                         }
@@ -409,13 +415,11 @@ public class Main2Activity extends AppCompatActivity  {
 
                     ss = imguri.toString();
                     ImgView.setImageURI(Image_uri);
-
-
                     //Imge view with glide
                  //   Glide.with(Main2Activity.this).load(ss).into(ImgView);
 
 
-                    Toast.makeText(Main2Activity.this, ss,Toast.LENGTH_LONG ).show();
+                    Toast.makeText(Main2Activity.this, "Image Uploaded",Toast.LENGTH_LONG ).show();
 
                 }
             });
@@ -433,22 +437,22 @@ public class Main2Activity extends AppCompatActivity  {
 //imgUrl rr = new imgUrl();
 //Toast.makeText(Main2Activity.this, ssimg, Toast.LENGTH_LONG).show();
 
-        String dt = DatePick.getText().toString();
-        String nm1 = Name1.getText().toString();
-        String nm2 = Name2.getText().toString();
+        String dt = DatePick.getText().toString().toUpperCase();
+        String nm1 = Name1.getText().toString().toUpperCase();
+        String nm2 = Name2.getText().toString().toUpperCase();
         String fame = nm1 + " " + nm2;
         String time1 = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
         String numb = Number1.getText().toString().trim();
-        String arr = AreaSpin.getSelectedItem().toString().trim();
-        String arrr = Area1.getText().toString().trim();
-        String Stype = ServiceSpin.getSelectedItem().toString().trim();
-        String Sinf = InfoSer.getText().toString().trim();
-        String asstp = AssignSpin.getSelectedItem().toString().trim();
-        String statuss = StatusSpin.getSelectedItem().toString().trim();
-        String pr = PrioritySpin.getSelectedItem().toString().trim();
-        String bll = BillSpin.getSelectedItem().toString().trim();
-        String pstatus = PaymentSpin.getSelectedItem().toString().trim();
-        String rema = Remarks.getText().toString().trim();
+        String arr = AreaSpin.getSelectedItem().toString().trim().toUpperCase();
+        String arrr = Area1.getText().toString().trim().toUpperCase();
+        String Stype = ServiceSpin.getSelectedItem().toString().trim().toUpperCase();
+        String Sinf = InfoSer.getText().toString().trim().toUpperCase();
+        String asstp = AssignSpin.getSelectedItem().toString().trim().toUpperCase();
+        String statuss = StatusSpin.getSelectedItem().toString().trim().toUpperCase();
+        String pr = PrioritySpin.getSelectedItem().toString().trim().toUpperCase();
+        String bll = BillSpin.getSelectedItem().toString().trim().toUpperCase();
+        String pstatus = PaymentSpin.getSelectedItem().toString().trim().toUpperCase();
+        String rema = Remarks.getText().toString().trim().toUpperCase();
 
         //   Image String
         Bitmap bm = mSignaturePad.getSignatureBitmap();
@@ -473,8 +477,6 @@ public class Main2Activity extends AppCompatActivity  {
        Toast.makeText(Main2Activity.this, "Task Added", Toast.LENGTH_LONG).show();
 
              }
-
-
 
     }
 

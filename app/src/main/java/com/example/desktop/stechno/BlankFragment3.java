@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -84,13 +85,12 @@ public class BlankFragment3 extends Fragment {
         list = new ArrayList<>();
         Taskcom1.setLayoutManager(new LinearLayoutManager(getContext()));
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("New Task");
-        Query query = databaseReference.orderByChild("TaskStatus").equalTo("PENDING");
-        ChildEventListener childEventListener = new ChildEventListener() {
+        databaseReference.orderByChild("taskStatus").equalTo("PENDING").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Profile p = dataSnapshot.getValue(Profile.class);
                 list.add(p);
-                Comadp comadp = new Comadp(BlankFragment3.this.getContext(),list);
+                Comadp comadp = new Comadp(getContext(),list);
                 Taskcom1.setAdapter(comadp);
             }
 
@@ -113,7 +113,8 @@ public class BlankFragment3 extends Fragment {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        };query.addChildEventListener(childEventListener);
+        });
+
         return view;
     }
 

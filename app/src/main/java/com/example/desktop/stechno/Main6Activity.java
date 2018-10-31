@@ -33,12 +33,13 @@ public class Main6Activity extends AppCompatActivity {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String tr  = dataSnapshot.child("TaskName").getValue(String.class);
+              //  String tr  = dataSnapshot.child("TaskName").getValue(String.class);
 
-//                proAdd ppp = dataSnapshot.getValue(proAdd.class);
-//                list.add(ppp);
-//                 String tr = list.get(0).getTaskId();
-                Toast.makeText(Main6Activity.this, tr,Toast.LENGTH_LONG).show();
+                proAdd ppp = dataSnapshot.getValue(proAdd.class);
+                list.add(ppp);
+                 String tr = list.get(0).getTaskName().toUpperCase();
+             //   Toast.makeText(Main6Activity.this, tr,Toast.LENGTH_LONG).show();
+                TskName.setText(tr);
 
             }
 
@@ -47,29 +48,6 @@ public class Main6Activity extends AppCompatActivity {
 
             }
         });
-//        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-//
-//
-//
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//
-//
-//                proAdd p = dataSnapshot.getValue(proAdd.class);
-//                list.add(p);
-//                String ss = list.get(1).getTaskName();
-//                Toast.makeText(Main6Activity.this, ss, Toast.LENGTH_LONG).show();
-//
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//
-//        });
-
 
     }
 

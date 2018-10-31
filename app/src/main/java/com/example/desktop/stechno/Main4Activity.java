@@ -4,7 +4,6 @@ import android.support.annotation.Nullable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -30,7 +29,7 @@ Comadp comadp;
 
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("New Task");
-        Query query = databaseReference.orderByChild("TaskStatus").equalTo("COMPLETED");
+        Query query = databaseReference.orderByChild("TaskStatus").equalTo("In_Progress");
 //        Query query1 = databaseReference.orderByChild("TaskStatus").equalTo("PENDING");
 //        Query query2 = databaseReference.orderByChild("TaskStatus").equalTo("In_Progress");
 
@@ -48,18 +47,15 @@ Comadp comadp;
 //        else {
 //             query = databaseReference.orderByChild("TaskStatus").equalTo("In_Progress");
 //        }
-
-
-        ChildEventListener childEventListener = new ChildEventListener() {
+        databaseReference.orderByChild("taskStatus").equalTo("COMPLETED").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                    Profile p = dataSnapshot.getValue(Profile.class);
-                    list.add(p);
-                comadp = new Comadp(Main4Activity.this, list);
+                Profile pp = dataSnapshot.getValue(Profile.class);
+                list.add(pp);
+                comadp = new Comadp(Main4Activity.this,list);
                 Taskcom.setAdapter(comadp);
 
             }
-
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -80,13 +76,42 @@ Comadp comadp;
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        };
-        query.addChildEventListener(childEventListener);
+        });
 
-//    if(TaskPen.hasSelection()){
-//        query1.addChildEventListener(childEventListener);
-//    }
-//    ;
+
+//        ChildEventListener childEventListener = new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//                    Profile p = dataSnapshot.getValue(Profile.class);
+//                    list.add(p);
+//                comadp = new Comadp(Main4Activity.this, list);
+//                Taskcom.setAdapter(comadp);
+//
+//            }
+//
+//
+//            @Override
+//            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//
+//            }
+//
+//            @Override
+//            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+//
+//            }
+//
+//            @Override
+//            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        };
+//        query.addChildEventListener(childEventListener);
+
 
     }
 }

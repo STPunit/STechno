@@ -92,23 +92,18 @@ public class BlankFragment1 extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_blank_fragment1, parent, false);
-      //  final RecyclerView recyclerView = view.findViewById(R.id.Taskcom1);
         Taskcom1 = view.findViewById(R.id.Taskcom1);
         list = new ArrayList<>();
 
         Taskcom1.setLayoutManager(new LinearLayoutManager(getContext()));
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("New Task");
-        Query query = databaseReference.orderByChild("TaskStatus").equalTo("COMPLETED");
-        ChildEventListener childEventListener = new ChildEventListener() {
+        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("New Task");
+        databaseReference.orderByChild("taskStatus").equalTo("COMPLETED").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                Profile p = dataSnapshot.getValue(Profile.class);
-                list.add(p);
-               Comadp comadp = new Comadp(BlankFragment1.this.getContext(), list);
+                Profile pp = dataSnapshot.getValue(Profile.class);
+                list.add(pp);
+                Comadp comadp = new Comadp(BlankFragment1.this.getContext(), list);
                 Taskcom1.setAdapter(comadp);
-
-
             }
 
             @Override
@@ -130,7 +125,7 @@ public class BlankFragment1 extends Fragment {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        };query.addChildEventListener(childEventListener);
+        });
 
 
 
