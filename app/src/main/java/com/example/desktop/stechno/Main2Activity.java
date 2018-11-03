@@ -13,6 +13,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Handler;
 import android.os.RecoverySystem;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -34,6 +35,7 @@ import com.bumptech.glide.Glide;
 import com.github.gcacace.signaturepad.views.SignaturePad;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -57,13 +59,14 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.logging.LoggingMXBean;
 
 import javax.net.ssl.HttpsURLConnection;
 
 import io.apptik.widget.multiselectspinner.MultiSelectSpinner;
 
 
-public class Main2Activity extends AppCompatActivity  {
+public class Main2Activity extends AppCompatActivity {
 
     private static final int CREATE_CAPTURE_CODE = 1000;
     private static final int PERMISSION_CODE = 1000;
@@ -72,14 +75,15 @@ public class Main2Activity extends AppCompatActivity  {
     SignaturePad mSignaturePad;
     StorageReference mStoreage;
     ImageView ImgView;
-    DatabaseReference  reff;
+    DatabaseReference reff;
     Uri Image_uri;
     ProgressDialog progressDialog;
     Button btnIm, DataAdd, ButtonDate;
     Spinner AreaSpin, StatusSpin, PrioritySpin, BillSpin, PaymentSpin;
     MultiSelectSpinner ServiceSpin, AssignSpin;
     Uri imguri;
-    String ss;
+    String ss, idc;
+    Long rt;
 
 
     @Override
@@ -113,6 +117,8 @@ public class Main2Activity extends AppCompatActivity  {
         ButtonDate = findViewById(R.id.ButtonDate);
         progressDialog = new ProgressDialog(this);
 
+
+
         ButtonDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,7 +128,6 @@ public class Main2Activity extends AppCompatActivity  {
                     mYear = c.get(Calendar.YEAR);
                     mMonth = c.get(Calendar.MONTH);
                     mDay = c.get(Calendar.DAY_OF_MONTH);
-
 
 
                     final DatePickerDialog datePickerDialog = new DatePickerDialog(Main2Activity.this, new DatePickerDialog.OnDateSetListener() {
@@ -143,8 +148,6 @@ public class Main2Activity extends AppCompatActivity  {
         });
 
 
-
-
         DatabaseReference rev = stat.child("Status").getRef();
         DatabaseReference spinS = stat.child("Assign TO").getRef();
         DatabaseReference spinSer = stat.child("Service Type").getRef();
@@ -152,6 +155,31 @@ public class Main2Activity extends AppCompatActivity  {
         DatabaseReference prir = stat.child("Priority").getRef();
         DatabaseReference bl = stat.child("Billing").getRef();
         DatabaseReference PayStat = stat.child("PStatus").getRef();
+        DatabaseReference coun = FirebaseDatabase.getInstance().getReference().child("TaskCount");
+
+
+
+
+
+ coun.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.child("tr").exists()){
+                    idc = dataSnapshot.child("tr").getValue(String.class);
+                 //   Toast.makeText(Main2Activity.this,idc, Toast.LENGTH_LONG).show();
+                }
+               // Toast.makeText(Main2Activity.this, String.valueOf(rt), Toast.LENGTH_LONG).show();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
 
 
         //Billing spin
@@ -178,20 +206,18 @@ public class Main2Activity extends AppCompatActivity  {
 
             @Override
             public void onClick(View v) {
-                if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.M){
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED ||
-                            checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
-                        String [] permission = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                            checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                        String[] permission = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
                         requestPermissions(permission, PERMISSION_CODE);
-                    }
-                    else {
+                    } else {
                         //permission already granteerd
                         openCamera();
                     }
 
 
-                    }
-                    else {
+                } else {
                     // sdk < mashmallow
                     openCamera();
                 }
@@ -201,9 +227,6 @@ public class Main2Activity extends AppCompatActivity  {
 
 
         });
-
-
-
 
 
         //PAyment Spin
@@ -343,7 +366,6 @@ public class Main2Activity extends AppCompatActivity  {
         });
 
 
-
         String date1 = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
         DatePick.setText(date1);
 
@@ -351,6 +373,7 @@ public class Main2Activity extends AppCompatActivity  {
             @Override
             public void onClick(View v) {
                 if (v == DataAdd) {
+
                     AddData();
                 }
             }
@@ -359,20 +382,18 @@ public class Main2Activity extends AppCompatActivity  {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode){
-            case PERMISSION_CODE:{
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+        switch (requestCode) {
+            case PERMISSION_CODE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     //permission from popup wa granted
                     openCamera();
-                }
-                else {
+                } else {
                     //permission from pouup denied
                     Toast.makeText(Main2Activity.this, "Permission denied", Toast.LENGTH_LONG).show();
                 }
             }
         }
     }
-
 
 
     public void openCamera() {
@@ -386,19 +407,16 @@ public class Main2Activity extends AppCompatActivity  {
         startActivityForResult(intent, CREATE_CAPTURE_CODE);
 
 
-
     }
-
 
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (resultCode ==RESULT_OK){
-       //     ImgView.setImageURI(Image_uri);
+        if (resultCode == RESULT_OK) {
+            //     ImgView.setImageURI(Image_uri);
 
-            progressDialog.setMessage("Uploading Image ..." );
+            progressDialog.setMessage("Uploading Image ...");
             progressDialog.show();
-
 
 
             StorageReference storageReference = FirebaseStorage.getInstance().getReference();
@@ -410,30 +428,28 @@ public class Main2Activity extends AppCompatActivity  {
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     progressDialog.dismiss();
                     Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl();
-                    while (!urlTask.isSuccessful());
+                    while (!urlTask.isSuccessful()) ;
                     imguri = urlTask.getResult();
 
                     ss = imguri.toString();
                     ImgView.setImageURI(Image_uri);
                     //Imge view with glide
-                 //   Glide.with(Main2Activity.this).load(ss).into(ImgView);
+                    //   Glide.with(Main2Activity.this).load(ss).into(ImgView);
 
 
-                    Toast.makeText(Main2Activity.this, "Image Uploaded",Toast.LENGTH_LONG ).show();
+                    Toast.makeText(Main2Activity.this, "Image Uploaded", Toast.LENGTH_LONG).show();
 
                 }
             });
 
-        }
-        else {
+        } else {
             Toast.makeText(Main2Activity.this, "Image is not set", Toast.LENGTH_LONG).show();
         }
     }
 
 
+    public void AddData() {
 
-    public void AddData()
-    {
 //imgUrl rr = new imgUrl();
 //Toast.makeText(Main2Activity.this, ssimg, Toast.LENGTH_LONG).show();
 
@@ -441,11 +457,11 @@ public class Main2Activity extends AppCompatActivity  {
         String nm1 = Name1.getText().toString().toUpperCase();
         String nm2 = Name2.getText().toString().toUpperCase();
         String fame = nm1 + " " + nm2;
-        String time1 = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+        String time1 = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault()).format(new Date());
         String numb = Number1.getText().toString().trim();
         String arr = AreaSpin.getSelectedItem().toString().trim().toUpperCase();
         String arrr = Area1.getText().toString().trim().toUpperCase();
-        String Stype = ServiceSpin.getSelectedItem().toString().trim().toUpperCase();
+        final String Stype = ServiceSpin.getSelectedItem().toString().trim().toUpperCase();
         String Sinf = InfoSer.getText().toString().trim().toUpperCase();
         String asstp = AssignSpin.getSelectedItem().toString().trim().toUpperCase();
         String statuss = StatusSpin.getSelectedItem().toString().trim().toUpperCase();
@@ -459,26 +475,36 @@ public class Main2Activity extends AppCompatActivity  {
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bm.compress(Bitmap.CompressFormat.PNG, 50, byteArrayOutputStream);
-        byte [] bytes11 = byteArrayOutputStream.toByteArray();
+        byte[] bytes11 = byteArrayOutputStream.toByteArray();
         String bst = android.util.Base64.encodeToString(bytes11, android.util.Base64.DEFAULT);
 
 
 
+        reff = FirebaseDatabase.getInstance().getReference("New Task");
+        final DatabaseReference coun = FirebaseDatabase.getInstance().getReference().child("TaskCount");
 
+        
+        String ndd = "ST" + idc;
+      //  Toast.makeText(Main2Activity.this, ndd, Toast.LENGTH_LONG).show();
 
-
-
-                reff = FirebaseDatabase.getInstance().getReference("New Task");
-
-                 String ndd = reff.push().getKey();
-                 proAdd pr1 = new proAdd(dt,time1, fame, numb, arr, arrr, ss , Stype, Sinf, asstp, statuss, pr, bll, pstatus, rema, bst, ndd);
+        proAdd pr1 = new proAdd(dt, time1, fame, numb, arr, arrr, ss, Stype, Sinf, asstp, statuss, pr, bll, pstatus, rema, bst, ndd);
         assert ndd != null;
         reff.child(ndd).setValue(pr1);
-       Toast.makeText(Main2Activity.this, "Task Added", Toast.LENGTH_LONG).show();
+           Toast.makeText(Main2Activity.this, "Task " +ndd + " Added", Toast.LENGTH_LONG).show();
+        rt = Long.decode(idc)+1;
+        coun.child("tr").setValue(Long.toString(rt));
+          Handler handler = new Handler();
+          handler.postDelayed(new Runnable() {
+              @Override
+              public void run() {
 
-             }
-
+              }
+          },3000);
+          Intent intent= getIntent();
+          finish();
+          startActivity(intent);
     }
+}
 
 
 

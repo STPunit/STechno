@@ -12,7 +12,7 @@
     <string name="area_line">Area Line</string>
     <string name="service_type">Service Type</string>
     <string name="service_info">Service Info</string>
-    <string name="assigned_to">Assigned to :</string>
+    <string name="assigned_to">Assigned to</string>
     <string name="status">Status</string>
     <string name="priority">Priority</string>
     <string name="billing">Billing</string>
@@ -37,4 +37,6 @@
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
     <string name="tab_text_3">Tab 3</string>
+    <string name="id">Id</string>
+    <string name="task_id">Task Id</string>
 </resources>
