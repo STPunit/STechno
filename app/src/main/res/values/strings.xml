@@ -24,6 +24,8 @@
     <string name="image_path">Image Path</string>
     <string name="submit">Submit</string>
     <string name="todo">TODO</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
     <string name="completed">Completed</string>
     <string name="in_progress">In Progress</string>
     <string name="pending">Pending</string>
@@ -39,4 +41,6 @@
     <string name="tab_text_3">Tab 3</string>
     <string name="id">Id</string>
     <string name="task_id">Task Id</string>
+    <string name="add_task">Add Task</string>
+    <string name="view_task">View Task</string>
 </resources>
