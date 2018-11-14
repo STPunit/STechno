@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/feat"
+        android:checkableBehavior="single">
+
+        <item android:id="@+id/addTask"
+            android:icon="@drawable/taddd"
+
+            android:title="@string/add_task"
+            />
+        <item android:id="@+id/viewTask"
+            android:icon="@drawable/tvieww"
+
+            android:title="@string/view_task"
+            />
+
+    </group>
+
+
+
+
+</menu>
