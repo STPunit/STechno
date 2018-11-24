@@ -17,10 +17,15 @@ import android.widget.Button;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.FirebaseMessagingService;
+
+import java.util.MissingFormatArgumentException;
 
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity  extends AppCompatActivity {
+
 
 
     Button button2, t2, t3;
@@ -34,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FirebaseMessaging.getInstance().subscribeToTopic("pushNotifications");
         setContentView(R.layout.activity_main);
         tbr();
         button2 = findViewById(R.id.button2);
@@ -217,12 +223,15 @@ public class MainActivity extends AppCompatActivity {
                 switch (menuItem.getItemId()){
 
                     case R.id.addTask:
-                        Toast.makeText(MainActivity.this, "add task", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(MainActivity.this, Main2Activity.class));
+                      //  Toast.makeText(MainActivity.this, "add task", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.viewTask:
-                        Toast.makeText(MainActivity.this,"view", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(MainActivity.this, Main7Activity.class));
+                       // Toast.makeText(MainActivity.this,"view", Toast.LENGTH_SHORT).show();
                         break;
                 }
+                drawerLayout.closeDrawer(GravityCompat.START);
                 return false;
             }
         });

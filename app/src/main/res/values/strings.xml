@@ -40,7 +40,10 @@
     <string name="tab_text_2">Tab 2</string>
     <string name="tab_text_3">Tab 3</string>
     <string name="id">Id</string>
+    <string name="default_notification_channel_id">default_notification_channel_id</string>
     <string name="task_id">Task Id</string>
     <string name="add_task">Add Task</string>
     <string name="view_task">View Task</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 </resources>

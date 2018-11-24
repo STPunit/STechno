@@ -49,11 +49,13 @@ public class Profile {
     public void setTaskServiceType(String taskServiceType) {
         this.TaskServiceType = taskServiceType;
     }
-    public String getTaskId(){
+
+    public String getTaskId() {
         return TaskId;
     }
 
     public void setTaskId(String taskId) {
         this.TaskId = taskId;
     }
+
 }

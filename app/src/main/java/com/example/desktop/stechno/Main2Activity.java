@@ -488,6 +488,7 @@ public class Main2Activity extends AppCompatActivity {
       //  Toast.makeText(Main2Activity.this, ndd, Toast.LENGTH_LONG).show();
 
         proAdd pr1 = new proAdd(dt, time1, fame, numb, arr, arrr, ss, Stype, Sinf, asstp, statuss, pr, bll, pstatus, rema, bst, ndd);
+
         assert ndd != null;
         reff.child(ndd).setValue(pr1);
            Toast.makeText(Main2Activity.this, "Task " +ndd + " Added", Toast.LENGTH_LONG).show();
@@ -505,12 +506,3 @@ public class Main2Activity extends AppCompatActivity {
           startActivity(intent);
     }
 }
-
-
-
-
-
-
-
-
-
