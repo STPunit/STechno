@@ -38,6 +38,8 @@ public class BlankFragment2 extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     ArrayList<Profile> list;
     RecyclerView Taskcom1;
+    private LinearLayoutManager mLayoutManager;
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -83,7 +85,13 @@ public class BlankFragment2 extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_blank_fragment2, parent, false);
         Taskcom1 = view.findViewById(R.id.Taskcom1);
         list = new ArrayList<>();
-        Taskcom1.setLayoutManager(new LinearLayoutManager(getContext()));
+       // Taskcom1.setLayoutManager(new LinearLayoutManager(getActivity()));
+        //reversing layout
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        mLayoutManager.setReverseLayout(true);
+        mLayoutManager.setStackFromEnd(true);
+        Taskcom1.setLayoutManager(mLayoutManager);
+
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("New Task");
         databaseReference.orderByChild("taskStatus").equalTo("IN_PROGRESS").addChildEventListener(new ChildEventListener() {
             @Override

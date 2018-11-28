@@ -83,7 +83,12 @@ public class BlankFragment3 extends Fragment {
         View view  = inflater.inflate(R.layout.fragment_blank_fragment3, parent, false);
         Taskcom1 = view.findViewById(R.id.Taskcom1);
         list = new ArrayList<>();
-        Taskcom1.setLayoutManager(new LinearLayoutManager(getContext()));
+       // Taskcom1.setLayoutManager(new LinearLayoutManager(getContext()));
+        //reversing layout
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        mLayoutManager.setReverseLayout(true);
+        mLayoutManager.setStackFromEnd(true);
+        Taskcom1.setLayoutManager(mLayoutManager);
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("New Task");
         databaseReference.orderByChild("taskStatus").equalTo("PENDING").addChildEventListener(new ChildEventListener() {
             @Override

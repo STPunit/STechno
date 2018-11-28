@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,7 +30,7 @@ public class Pintent extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pientn);
-        Bundle extras = getIntent().getExtras();
+        final Bundle extras = getIntent().getExtras();
 
         assert extras != null;
         String msd = extras.getString("id");
@@ -95,83 +96,30 @@ public class Pintent extends AppCompatActivity {
                 }
             });
 
+        toolbar.setOnMenuItemClickListener(new android.support.v7.widget.Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.eedit:
+                        Toast.makeText(getApplicationContext(), "edit", Toast.LENGTH_SHORT).show();
+
+                        break;
+                    case R.id.delt:
+
+
+                        reference.removeValue();
+                        Intent intent = new Intent(getApplicationContext(), Main7Activity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        Pintent.this.finish();
+                        Toast.makeText(getApplicationContext(), extras +" Removed Successfully ", Toast.LENGTH_SHORT).show();
+                        finish();
+                        break;
+                }
+                return false;
+            }
+        });
+
         }
 
-
-//    @Override
-//    protected void onSaveInstanceState(Bundle outState) {
-//        super.onSaveInstanceState(outState);
-//        onNewIntent(getIntent());
-//    }
-
-//    @Override
-//    public void onNewIntent(Intent intent) {
-//        Bundle extra = intent.getExtras();
-//        if (extra != null){
-//            if (extra.containsKey("id")) {
-//                setContentView(R.layout.activity_main6);
-//                String msd = extra.getString("id");
-//                Toast.makeText(this, msd, Toast.LENGTH_SHORT).show();
-//
-//                final TextView TskName = findViewById(R.id.Tskname);
-//                final TextView Tdate = findViewById(R.id.Tdate);
-//                final TextView Tid = findViewById(R.id.Tid);
-//                final TextView Tpay = findViewById(R.id.Tpay);
-//                final TextView Tareal = findViewById(R.id.Tareal);
-//                final TextView Tprio = findViewById(R.id.Tprio);
-//                final TextView Tstat = findViewById(R.id.Tstat);
-//                final TextView Tass = findViewById(R.id.Tassign);
-//                final TextView Tnum = findViewById(R.id.Tnum);
-//                final TextView Tserc = findViewById(R.id.Tser);
-//                final TextView Tinf = findViewById(R.id.Tinfo);
-//                final TextView Tbill = findViewById(R.id.Tbill);
-//                final TextView Tar = findViewById(R.id.Tar);
-//                final ImageView Tim = findViewById(R.id.Tim);
-//                final ImageView Tsig = findViewById(R.id.Tsig);
-//                if (msd != null) {
-//                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("New Task").child(msd);
-//
-//
-//                    list = new ArrayList<>();
-//
-//                    ref.addValueEventListener(new ValueEventListener() {
-//                        @Override
-//                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//
-//                            proAdd ppp = dataSnapshot.getValue(proAdd.class);
-//                            list.add(ppp);
-//                            Tdate.setText(list.get(0).getTaskDate().toUpperCase());
-//                            TskName.setText(list.get(0).getTaskName().toUpperCase());
-//                            Tid.setText(list.get(0).getTaskId().toUpperCase());
-//                            Tpay.setText(list.get(0).getTaskPaymentStatus().toUpperCase());
-//                            Tareal.setText(list.get(0).getTaskAreaLine().toUpperCase());
-//                            Tprio.setText(list.get(0).getTaskPriority().toUpperCase());
-//                            Tstat.setText(list.get(0).getTaskStatus().toUpperCase());
-//                            Tass.setText(list.get(0).getTaskAssignedTo().toUpperCase());
-//                            Tnum.setText(list.get(0).getTaskNumber());
-//                            Tserc.setText(list.get(0).getTaskServiceType().toUpperCase());
-//                            Tinf.setText(list.get(0).getTaskServiceInfo().toUpperCase());
-//                            Tbill.setText(list.get(0).getTaskBilled().toUpperCase());
-//                            Tar.setText(list.get(0).getTaskArea().toUpperCase());
-//                            String sig = list.get(0).getTaskSignature();
-//                            byte[] bytes = android.util.Base64.decode(sig,android.util.Base64.DEFAULT);
-//                            ByteArrayInputStream byteArrayInputStream =  new ByteArrayInputStream(bytes);
-//                            Tsig.setImageBitmap(BitmapFactory.decodeStream(byteArrayInputStream));
-//                            String imm = list.get(0).getTaskImage();
-//                            Glide.with(pintent.this).load(imm).into(Tim);
-//
-//
-//
-//
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//                    }
-//                });
-//                }
-//            }
-//        }
-//    }
 }

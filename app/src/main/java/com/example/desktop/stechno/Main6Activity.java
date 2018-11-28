@@ -6,9 +6,11 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
@@ -33,7 +35,7 @@ public class Main6Activity extends AppCompatActivity {
         Intent context = getIntent();
         toolbar = findViewById(R.id.tbr);
         toolbar.inflateMenu(R.menu.mange);
-        String id = context.getStringExtra("id");
+        final String id = context.getStringExtra("id");
        // Toast.makeText(Main6Activity.this,id, Toast.LENGTH_LONG).show();
         final TextView TskName = findViewById(R.id.Tskname);
         final TextView Tdate = findViewById(R.id.Tdate);
@@ -50,7 +52,7 @@ public class Main6Activity extends AppCompatActivity {
         final TextView Tar = findViewById(R.id.Tar);
         final ImageView Tim = findViewById(R.id.Tim);
         final ImageView Tsig = findViewById(R.id.Tsig);
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("New Task").child(id);
+        final DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("New Task").child(id);
 
         list = new ArrayList<>();
 
@@ -91,7 +93,31 @@ public class Main6Activity extends AppCompatActivity {
             }
         });
 
+        toolbar.setOnMenuItemClickListener(new android.support.v7.widget.Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.eedit:
+                        Toast.makeText(getApplicationContext(), "Edit", Toast.LENGTH_SHORT).show();
+
+                        break;
+                    case R.id.delt:
+
+
+                        ref.removeValue();
+                        Intent intent = new Intent(getApplicationContext(), Main7Activity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        Main6Activity.this.finish();
+                        Toast.makeText(getApplicationContext(), id +" Removed Successfully ", Toast.LENGTH_SHORT).show();
+                        finish();
+                        break;
+                }
+                return false;
+            }
+        });
 
     }
+
 
 }
