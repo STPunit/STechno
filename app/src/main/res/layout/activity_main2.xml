@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:layout_marginBottom="20dp"
     android:background="@drawable/roundlayoutt"
     tools:context=".Main2Activity">
     <include layout="@layout/toolbr"
@@ -526,9 +527,10 @@
             <Button
                 android:id="@+id/DataAdd"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
                 android:text="@string/submit"
-                android:layout_marginBottom="10dp"
                 android:textAlignment="center" />
 
 

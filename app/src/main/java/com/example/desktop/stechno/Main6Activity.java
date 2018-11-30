@@ -98,8 +98,12 @@ public class Main6Activity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem menuItem) {
                 switch (menuItem.getItemId()){
                     case R.id.eedit:
-                        Toast.makeText(getApplicationContext(), "Edit", Toast.LENGTH_SHORT).show();
-
+                        //Toast.makeText(getApplicationContext(), "Edit", Toast.LENGTH_SHORT).show();
+                        Intent intent1 = new Intent(getApplicationContext(), Main5Activity.class);
+                        intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent1.putExtra("id", id);
+                        startActivity(intent1);
+                        finish();
                         break;
                     case R.id.delt:
 

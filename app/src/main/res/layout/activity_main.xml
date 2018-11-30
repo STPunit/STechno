@@ -24,18 +24,18 @@
         android:id="@+id/button2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:text="@string/add_task" />
 
     <Button
         android:id="@+id/t2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/completed" />
+        android:text="@string/name" />
     <Button
         android:id="@+id/t3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/completed" /></LinearLayout>
+        android:text="@string/view_task" /></LinearLayout>
     <android.support.design.widget.NavigationView
         android:layout_width="match_parent"
         android:id="@+id/navview"

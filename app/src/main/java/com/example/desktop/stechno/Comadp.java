@@ -39,6 +39,7 @@ public class Comadp extends RecyclerView.Adapter<Comadp.Comhol> {
     @Override
     public void onBindViewHolder (@NonNull final Comhol comhol, final int i)  {
     comhol.txtName.setText(profiles.get(i).getTaskName());
+    comhol.tskkid.setText(profiles.get(i).getTaskId());
     comhol.txtTask.setText(profiles.get(i).getTaskServiceType());
     comhol.txtStatus.setText(profiles.get(i).getTaskPriority());
     comhol.txtAssign.setText(profiles.get(i).getTaskAssignedTo());
@@ -66,7 +67,7 @@ public class Comadp extends RecyclerView.Adapter<Comadp.Comhol> {
     }
 
     public class Comhol extends RecyclerView.ViewHolder  {
-        TextView txtName, txtStatus, txtAssign, txtTask;
+        TextView txtName, txtStatus, txtAssign, txtTask, tskkid;
         LinearLayout parentlayout;
 
         public Comhol(View itemView){
@@ -75,6 +76,8 @@ public class Comadp extends RecyclerView.Adapter<Comadp.Comhol> {
             txtName = itemView.findViewById(R.id.txtName);
             txtStatus = itemView.findViewById(R.id.txtStatus);
             txtTask = itemView.findViewById(R.id.txtTask);
+            tskkid = itemView.findViewById(R.id.tskkid);
+
             parentlayout = itemView.findViewById(R.id.parentlayout);
         }
 

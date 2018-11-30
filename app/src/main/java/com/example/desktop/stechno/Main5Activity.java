@@ -3,70 +3,48 @@ package com.example.desktop.stechno;
 import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
-import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Handler;
-import android.os.RecoverySystem;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Base64;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.github.gcacace.signaturepad.views.SignaturePad;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.logging.LoggingMXBean;
-
-import javax.net.ssl.HttpsURLConnection;
 
 import io.apptik.widget.multiselectspinner.MultiSelectSpinner;
 
-
-public class Main2Activity extends AppCompatActivity {
-
+public class Main5Activity extends AppCompatActivity {
+    android.support.v7.widget.Toolbar toolbar;
     private static final int CREATE_CAPTURE_CODE = 1000;
     private static final int PERMISSION_CODE = 1000;
     EditText DatePick, Name1, Name2, Remarks, Number1, Area1, InfoSer;
@@ -81,15 +59,20 @@ public class Main2Activity extends AppCompatActivity {
     Spinner AreaSpin, StatusSpin, PrioritySpin, BillSpin, PaymentSpin;
     MultiSelectSpinner ServiceSpin, AssignSpin;
     Uri imguri;
-    String ss, idc;
+    DatabaseReference reference;
+    String ss, idc, getAr, getSt, getPt,getBl, getPs, getAs, getSertt, getimm,getsim;
     Long rt;
+    ArrayList<proAdd> list;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
-
+        setContentView(R.layout.activity_main5);
+        final Bundle extras = getIntent().getExtras();
+        assert extras != null;
+        String msd = extras.getString("id");
+        //Toast.makeText(this, msd, Toast.LENGTH_SHORT).show();
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         mStoreage = FirebaseStorage.getInstance().getReference();
@@ -115,6 +98,61 @@ public class Main2Activity extends AppCompatActivity {
         PaymentSpin = findViewById(R.id.PaymentSpin);
         ButtonDate = findViewById(R.id.ButtonDate);
         progressDialog = new ProgressDialog(this);
+        DatabaseReference rev = stat.child("Status").getRef();
+        DatabaseReference spinS = stat.child("Assign TO").getRef();
+        DatabaseReference spinSer = stat.child("Service Type").getRef();
+        final  DatabaseReference arel = stat.child("AreaList").getRef();
+        DatabaseReference prir = stat.child("Priority").getRef();
+        DatabaseReference bl = stat.child("Billing").getRef();
+        DatabaseReference PayStat = stat.child("PStatus").getRef();
+
+        if (msd != null) {
+            reference = FirebaseDatabase.getInstance().getReference().child("New Task").child(msd);
+        }
+
+        list = new ArrayList<>();
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                proAdd ppp = dataSnapshot.getValue(proAdd.class);
+                list.add(ppp);
+                DatePick.setText(list.get(0).getTaskDate());
+                Name1.setText(list.get(0).getTaskName().toUpperCase());
+                Number1.setText(list.get(0).getTaskNumber());
+                //AreaSpin.setTag(list.get(0).getTaskArea());
+                getAr = list.get(0).getTaskArea();
+                getSt = list.get(0).getTaskStatus();
+                getPt = list.get(0).getTaskPriority();
+                getBl = list.get(0).getTaskBilled();
+                getPs = list.get(0).getTaskPaymentStatus();
+                getSertt = list.get(0).getTaskServiceType();
+                getAs = list.get(0).getTaskAssignedTo();
+                Number1.setText(list.get(0).getTaskNumber());
+                Area1.setText(list.get(0).getTaskAreaLine());
+                InfoSer.setText(list.get(0).getTaskServiceInfo());
+                Remarks.setText(list.get(0).getTaskRemarks());
+                getimm = list.get(0).getTaskImage();
+                getsim = list.get(0).getTaskSignature();
+                Toast.makeText(getApplicationContext(), getimm, Toast.LENGTH_LONG).show();
+
+                // Setting image if not null
+        if (getimm != null){
+         //   Toast.makeText(getApplicationContext(), "inside inm", Toast.LENGTH_LONG).show();
+            Glide.with(Main5Activity.this).load(getimm).into(ImgView);
+        }
+
+
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
 
 
 
@@ -129,7 +167,7 @@ public class Main2Activity extends AppCompatActivity {
                     mDay = c.get(Calendar.DAY_OF_MONTH);
 
 
-                    final DatePickerDialog datePickerDialog = new DatePickerDialog(Main2Activity.this, new DatePickerDialog.OnDateSetListener() {
+                    final DatePickerDialog datePickerDialog = new DatePickerDialog(Main5Activity.this, new DatePickerDialog.OnDateSetListener() {
 
                         @Override
                         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -147,41 +185,8 @@ public class Main2Activity extends AppCompatActivity {
         });
 
 
-        DatabaseReference rev = stat.child("Status").getRef();
-        DatabaseReference spinS = stat.child("Assign TO").getRef();
-        DatabaseReference spinSer = stat.child("Service Type").getRef();
-        DatabaseReference arel = stat.child("AreaList").getRef();
-        DatabaseReference prir = stat.child("Priority").getRef();
-        DatabaseReference bl = stat.child("Billing").getRef();
-        DatabaseReference PayStat = stat.child("PStatus").getRef();
-        DatabaseReference coun = FirebaseDatabase.getInstance().getReference().child("TaskCount");
 
 
-
-
-
- coun.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.child("tr").exists()){
-                    idc = dataSnapshot.child("tr").getValue(String.class);
-                 //   Toast.makeText(Main2Activity.this,idc, Toast.LENGTH_LONG).show();
-                }
-               // Toast.makeText(Main2Activity.this, String.valueOf(rt), Toast.LENGTH_LONG).show();
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-
-
-
-
-        //Billing spin
         bl.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -189,8 +194,16 @@ public class Main2Activity extends AppCompatActivity {
                 for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
                     String prname1 = childDataSnapshot.getValue(String.class);
                     pr1.add(prname1);
-                    ArrayAdapter<String> pradp1 = new ArrayAdapter<>(Main2Activity.this, R.layout.support_simple_spinner_dropdown_item, pr1);
+                    int index = -1;
+                    for (int i = 0; i<pr1.size();i++){
+                        if (pr1.get(i).equalsIgnoreCase(getBl)){
+                            index = i;
+                            break;
+                        }
+                    }
+                    ArrayAdapter<String> pradp1 = new ArrayAdapter<>(Main5Activity.this, R.layout.support_simple_spinner_dropdown_item, pr1);
                     BillSpin.setAdapter(pradp1);
+                    BillSpin.setSelection(index);
                 }
             }
 
@@ -227,7 +240,6 @@ public class Main2Activity extends AppCompatActivity {
 
         });
 
-
         //PAyment Spin
 
         PayStat.addValueEventListener(new ValueEventListener() {
@@ -238,9 +250,17 @@ public class Main2Activity extends AppCompatActivity {
                 for (DataSnapshot childDataSnapShot : dataSnapshot.getChildren()) {
                     String stpay = childDataSnapShot.getValue(String.class);
                     pay1.add(stpay);
+                    int index = -1;
+                    for (int i = 0; i<pay1.size();i++){
+                        if (pay1.get(i).equalsIgnoreCase(getPs)){
+                            index = i;
+                            break;
+                        }
+                    }
 
-                    ArrayAdapter<String> payadp = new ArrayAdapter<>(Main2Activity.this, R.layout.support_simple_spinner_dropdown_item, pay1);
+                    ArrayAdapter<String> payadp = new ArrayAdapter<>(Main5Activity.this, R.layout.support_simple_spinner_dropdown_item, pay1);
                     PaymentSpin.setAdapter(payadp);
+                    PaymentSpin.setSelection(index);
                 }
             }
 
@@ -249,8 +269,6 @@ public class Main2Activity extends AppCompatActivity {
 
             }
         });
-
-
         //priority spin
 
         prir.addValueEventListener(new ValueEventListener() {
@@ -260,8 +278,18 @@ public class Main2Activity extends AppCompatActivity {
                 for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
                     String prname = childDataSnapshot.getValue(String.class);
                     pr.add(prname);
-                    ArrayAdapter<String> pradp = new ArrayAdapter<>(Main2Activity.this, R.layout.support_simple_spinner_dropdown_item, pr);
+
+                    int index = -1;
+                    for (int i = 0; i<pr.size();i++){
+                        if (pr.get(i).equalsIgnoreCase(getPt)){
+                            index = i;
+                            break;
+                        }
+                    }
+
+                    ArrayAdapter<String> pradp = new ArrayAdapter<>(Main5Activity.this, R.layout.support_simple_spinner_dropdown_item, pr);
                     PrioritySpin.setAdapter(pradp);
+                    PrioritySpin.setSelection(index);
                 }
             }
 
@@ -270,7 +298,6 @@ public class Main2Activity extends AppCompatActivity {
 
             }
         });
-
         //area spinner
 
         arel.addValueEventListener(new ValueEventListener() {
@@ -281,10 +308,18 @@ public class Main2Activity extends AppCompatActivity {
                 for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
                     String areaname = childDataSnapshot.getValue(String.class);
                     areas.add(areaname);
+                    int index = -1;
+                    for (int i = 0; i<areas.size();i++){
+                        if (areas.get(i).equalsIgnoreCase(getAr)){
+                            index = i;
+                            break;
+                        }
+                    }
 
 
-                    ArrayAdapter<String> areaAdapter = new ArrayAdapter<>(Main2Activity.this, R.layout.support_simple_spinner_dropdown_item, areas);
+                    ArrayAdapter<String> areaAdapter = new ArrayAdapter<>(Main5Activity.this, R.layout.support_simple_spinner_dropdown_item, areas);
                     AreaSpin.setAdapter(areaAdapter);
+                    AreaSpin.setSelection(index);
                 }
 
             }
@@ -311,6 +346,7 @@ public class Main2Activity extends AppCompatActivity {
                     ServiceSpin.setItems(ServS);
 
 
+
                 }
 
             }
@@ -328,7 +364,16 @@ public class Main2Activity extends AppCompatActivity {
                 for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
                     String Astr = childDataSnapshot.getValue(String.class);
                     Aspin.add(Astr);
+//                    int index = -1;
+//                    for ( int i = 0; i<Aspin.size();i++){
+//                        if (getAs.contains(Aspin.get(i))){
+//                            index = i;
+//
+//                        }
+//                    }
+
                     AssignSpin.setItems(Aspin);
+                   // AssignSpin.setSelection(2);
 
 
                 }
@@ -350,8 +395,17 @@ public class Main2Activity extends AppCompatActivity {
                 for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
                     String statusname = childDataSnapshot.child("Status").getValue(String.class);
                     Resv.add(statusname);
-                    ArrayAdapter<String> statAdapter = new ArrayAdapter<>(Main2Activity.this, R.layout.support_simple_spinner_dropdown_item, Resv);
+                    int index = -1;
+                    for (int i = 0; i<Resv.size();i++){
+                        if (Resv.get(i).equalsIgnoreCase(getSt)){
+                            index = i;
+                            break;
+                        }
+                    }
+
+                    ArrayAdapter<String> statAdapter = new ArrayAdapter<>(Main5Activity.this, R.layout.support_simple_spinner_dropdown_item, Resv);
                     StatusSpin.setAdapter(statAdapter);
+                    StatusSpin.setSelection(index);
 
                 }
 
@@ -365,18 +419,10 @@ public class Main2Activity extends AppCompatActivity {
         });
 
 
-        String date1 = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
-        DatePick.setText(date1);
 
-        DataAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (v == DataAdd) {
 
-                    AddData();
-                }
-            }
-        });
+
+
     }
 
     @Override
@@ -388,7 +434,7 @@ public class Main2Activity extends AppCompatActivity {
                     openCamera();
                 } else {
                     //permission from pouup denied
-                    Toast.makeText(Main2Activity.this, "Permission denied", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Main5Activity.this, "Permission denied", Toast.LENGTH_LONG).show();
                 }
             }
         }
@@ -430,78 +476,19 @@ public class Main2Activity extends AppCompatActivity {
                     while (!urlTask.isSuccessful()) ;
                     imguri = urlTask.getResult();
 
-                    ss = imguri.toString();
+                    getimm = imguri.toString();
                     ImgView.setImageURI(Image_uri);
                     //Imge view with glide
-                    //   Glide.with(Main2Activity.this).load(ss).into(ImgView);
+                    //   Glide.with(Main5Activity.this).load(ss).into(ImgView);
 
 
-                    Toast.makeText(Main2Activity.this, "Image Uploaded", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Main5Activity.this, "Image Uploaded", Toast.LENGTH_LONG).show();
 
                 }
             });
 
         } else {
-            Toast.makeText(Main2Activity.this, "Image is not set", Toast.LENGTH_LONG).show();
+            Toast.makeText(Main5Activity.this, "Image is not set", Toast.LENGTH_LONG).show();
         }
-    }
-
-
-    public void AddData() {
-
-//imgUrl rr = new imgUrl();
-//Toast.makeText(Main2Activity.this, ssimg, Toast.LENGTH_LONG).show();
-
-        String dt = DatePick.getText().toString().toUpperCase();
-        String nm1 = Name1.getText().toString().toUpperCase();
-        String nm2 = Name2.getText().toString().toUpperCase();
-        String fame = nm1 + " " + nm2;
-        String time1 = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault()).format(new Date());
-        String numb = Number1.getText().toString().trim();
-        String arr = AreaSpin.getSelectedItem().toString().trim().toUpperCase();
-        String arrr = Area1.getText().toString().trim().toUpperCase();
-        final String Stype = ServiceSpin.getSelectedItem().toString().trim().toUpperCase();
-        String Sinf = InfoSer.getText().toString().trim().toUpperCase();
-        String asstp = AssignSpin.getSelectedItem().toString().trim().toUpperCase();
-        String statuss = StatusSpin.getSelectedItem().toString().trim().toUpperCase();
-        String pr = PrioritySpin.getSelectedItem().toString().trim().toUpperCase();
-        String bll = BillSpin.getSelectedItem().toString().trim().toUpperCase();
-        String pstatus = PaymentSpin.getSelectedItem().toString().trim().toUpperCase();
-        String rema = Remarks.getText().toString().trim().toUpperCase();
-
-        //   Image String
-        Bitmap bm = mSignaturePad.getSignatureBitmap();
-
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bm.compress(Bitmap.CompressFormat.PNG, 50, byteArrayOutputStream);
-        byte[] bytes11 = byteArrayOutputStream.toByteArray();
-        String bst = android.util.Base64.encodeToString(bytes11, android.util.Base64.DEFAULT);
-
-
-
-        reff = FirebaseDatabase.getInstance().getReference("New Task");
-        final DatabaseReference coun = FirebaseDatabase.getInstance().getReference().child("TaskCount");
-
-        
-        String ndd = "ST" + idc;
-      //  Toast.makeText(Main2Activity.this, ndd, Toast.LENGTH_LONG).show();
-
-        proAdd pr1 = new proAdd(dt, time1, fame, numb, arr, arrr, ss, Stype, Sinf, asstp, statuss, pr, bll, pstatus, rema, bst, ndd);
-
-        assert ndd != null;
-        reff.child(ndd).setValue(pr1);
-           Toast.makeText(Main2Activity.this, "Task " +ndd + " Added", Toast.LENGTH_LONG).show();
-        rt = Long.decode(idc)+1;
-        coun.child("tr").setValue(Long.toString(rt));
-          Handler handler = new Handler();
-          handler.postDelayed(new Runnable() {
-              @Override
-              public void run() {
-
-              }
-          },3000);
-          Intent intent= getIntent();
-          finish();
-          startActivity(intent);
     }
 }
