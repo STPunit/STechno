@@ -17,9 +17,14 @@ import android.os.RecoverySystem;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -83,12 +88,18 @@ public class Main2Activity extends AppCompatActivity {
     Uri imguri;
     String ss, idc;
     Long rt;
+    ActionBarDrawerToggle actionBarDrawerToggle;
+    DrawerLayout drawerLayout;
+    NavigationView navigationView;
+    //Toolbar toolbar;
+    android.support.v7.widget.Toolbar toolbar;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+        tbr();
 
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -503,5 +514,37 @@ public class Main2Activity extends AppCompatActivity {
           Intent intent= getIntent();
           finish();
           startActivity(intent);
+    }
+    private void tbr(){
+        toolbar  = findViewById(R.id.tbr);
+        drawerLayout = findViewById(R.id.drawid);
+        setSupportActionBar(toolbar);
+        // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //  getSupportActionBar().setHomeButtonEnabled(true);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(Main2Activity.this, drawerLayout,toolbar, R.string.open, R.string.close);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+        navigationView = findViewById(R.id.navview);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+
+                    case R.id.addTask:
+                        //startActivity(new Intent(Main2Activity.this, Main2Activity.class));
+                          Toast.makeText(Main2Activity.this, "Already Adding ", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.viewTask:
+                        startActivity(new Intent(Main2Activity.this, Main7Activity.class));
+                        // Toast.makeText(MainActivity.this,"view", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return false;
+            }
+        });
+
+
+
     }
 }

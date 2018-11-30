@@ -491,4 +491,6 @@ public class Main5Activity extends AppCompatActivity {
             Toast.makeText(Main5Activity.this, "Image is not set", Toast.LENGTH_LONG).show();
         }
     }
+
+
 }
