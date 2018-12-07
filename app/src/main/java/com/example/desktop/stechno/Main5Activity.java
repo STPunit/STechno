@@ -133,7 +133,7 @@ public class Main5Activity extends AppCompatActivity {
                 Remarks.setText(list.get(0).getTaskRemarks());
                 getimm = list.get(0).getTaskImage();
                 getsim = list.get(0).getTaskSignature();
-                Toast.makeText(getApplicationContext(), getimm, Toast.LENGTH_LONG).show();
+               // Toast.makeText(getApplicationContext(), getimm, Toast.LENGTH_LONG).show();
 
                 // Setting image if not null
         if (getimm != null){

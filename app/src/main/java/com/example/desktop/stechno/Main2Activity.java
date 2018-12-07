@@ -363,6 +363,7 @@ public class Main2Activity extends AppCompatActivity {
                     Resv.add(statusname);
                     ArrayAdapter<String> statAdapter = new ArrayAdapter<>(Main2Activity.this, R.layout.support_simple_spinner_dropdown_item, Resv);
                     StatusSpin.setAdapter(statAdapter);
+                    StatusSpin.setSelection(2);
 
                 }
 

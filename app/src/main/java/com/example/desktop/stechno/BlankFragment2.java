@@ -93,7 +93,7 @@ public class BlankFragment2 extends Fragment {
         Taskcom1.setLayoutManager(mLayoutManager);
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("New Task");
-        databaseReference.orderByChild("taskStatus").equalTo("IN_PROGRESS").addChildEventListener(new ChildEventListener() {
+        databaseReference.orderByChild("taskStatus").equalTo("IN PROGRESS").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Profile pp = dataSnapshot.getValue(Profile.class);

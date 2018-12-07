@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -30,10 +29,10 @@ public class Pintent extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pientn);
-        final Bundle extras = getIntent().getExtras();
+        Bundle extras = getIntent().getExtras();
 
         assert extras != null;
-        String msd = extras.getString("id");
+        final String msd = extras.getString("id");
         Toast.makeText(this, msd, Toast.LENGTH_SHORT).show();
         toolbar = findViewById(R.id.tbr);
         toolbar.inflateMenu(R.menu.mange);
@@ -112,7 +111,7 @@ public class Pintent extends AppCompatActivity {
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         Pintent.this.finish();
-                        Toast.makeText(getApplicationContext(), extras +" Removed Successfully ", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), msd +" Removed Successfully ", Toast.LENGTH_SHORT).show();
                         finish();
                         break;
                 }

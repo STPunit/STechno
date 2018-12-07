@@ -1,6 +1,7 @@
 package com.example.desktop.stechno;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -25,9 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.firebase.messaging.FirebaseMessagingService;
 
-import java.util.MissingFormatArgumentException;
 
 
 
@@ -35,7 +34,7 @@ public class MainActivity  extends AppCompatActivity {
 
 
 
-    Button button2,  t3;
+    Button button2, t3;
     ActionBarDrawerToggle actionBarDrawerToggle;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
@@ -63,7 +62,7 @@ public class MainActivity  extends AppCompatActivity {
 
         Query query = tsk1.orderByChild("taskStatus").equalTo("COMPLETED");
         Query query1 = tsk1.orderByChild("taskStatus").equalTo("PENDING");
-        Query query2 = tsk1.orderByChild("taskStatus").equalTo("IN_PROGRESS");
+        Query query2 = tsk1.orderByChild("taskStatus").equalTo("IN PROGRESS");
 
 
         button2.setOnClickListener(new View.OnClickListener() {
@@ -105,6 +104,8 @@ public class MainActivity  extends AppCompatActivity {
             }
         };
         query.addValueEventListener(eventListener);
+
+
 
 
 
@@ -192,5 +193,25 @@ public class MainActivity  extends AppCompatActivity {
 
 
 
+    }
+    boolean doubleBackToExitPressedOnce = false;
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
     }
     }

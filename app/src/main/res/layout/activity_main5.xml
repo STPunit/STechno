@@ -46,8 +46,8 @@
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="5dp"
                     android:padding="3dp"
-                    android:text="@string/date"
-                    android:textSize="16sp" />
+                    android:text="@string/date"/>
+
 
                 <EditText
                     android:id="@+id/DatePick"
@@ -94,9 +94,11 @@
                     android:text="@string/name"
                     android:textSize="16sp" />
 
+
                 <EditText
                     android:id="@+id/Name1"
                     android:minWidth="93dp"
+                    
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
@@ -106,6 +108,7 @@
                     android:background="@null"
                     android:inputType="textCapCharacters"
                     android:padding="3dp" />
+
 
 
             </LinearLayout>
@@ -225,6 +228,7 @@
 
                 <io.apptik.widget.multiselectspinner.MultiSelectSpinner
                     android:id="@+id/ServiceSpin"
+
                     android:layout_width="wrap_content"
                     android:minWidth="160dp"
                     android:layout_height="match_parent"
@@ -255,7 +259,8 @@
 
                 <EditText
                     android:id="@+id/InfoSer"
-                    android:layout_width="160dp"
+                    android:layout_width="wrap_content"
+                    android:minWidth="160dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:background="@null"
@@ -433,6 +438,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
+                    android:minWidth="160dp"
                     android:layout_marginTop="5dp"
                     android:background="@null"
                     android:layout_marginBottom="5dp"
@@ -518,6 +524,7 @@
                     android:id="@+id/DataAdd"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@drawable/roundlayoutt"
                     android:layout_marginStart="40dp"
                     android:layout_marginEnd="40dp"
                     android:text="@string/common_google_play_services_update_button"
