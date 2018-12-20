@@ -6,8 +6,11 @@ import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Handler;
+import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -37,6 +40,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -60,7 +64,7 @@ public class Main5Activity extends AppCompatActivity {
     MultiSelectSpinner ServiceSpin, AssignSpin;
     Uri imguri;
     DatabaseReference reference;
-    String ss, idc, getAr, getSt, getPt,getBl, getPs, getAs, getSertt, getimm,getsim;
+    String ss, idc, getAr, getSt, getPt,getBl, getPs, getAs, getSertt, getimm, gettime, msd, newsign, newarea, newassign, getimm1;
     Long rt;
     ArrayList<proAdd> list;
 
@@ -71,7 +75,7 @@ public class Main5Activity extends AppCompatActivity {
         setContentView(R.layout.activity_main5);
         final Bundle extras = getIntent().getExtras();
         assert extras != null;
-        String msd = extras.getString("id");
+        msd = extras.getString("id");
         //Toast.makeText(this, msd, Toast.LENGTH_SHORT).show();
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -118,7 +122,7 @@ public class Main5Activity extends AppCompatActivity {
                 list.add(ppp);
                 DatePick.setText(list.get(0).getTaskDate());
                 Name1.setText(list.get(0).getTaskName().toUpperCase());
-                Number1.setText(list.get(0).getTaskNumber());
+                gettime = list.get(0).getTaskTime().toString();
                 //AreaSpin.setTag(list.get(0).getTaskArea());
                 getAr = list.get(0).getTaskArea();
                 getSt = list.get(0).getTaskStatus();
@@ -132,13 +136,12 @@ public class Main5Activity extends AppCompatActivity {
                 InfoSer.setText(list.get(0).getTaskServiceInfo());
                 Remarks.setText(list.get(0).getTaskRemarks());
                 getimm = list.get(0).getTaskImage();
-                getsim = list.get(0).getTaskSignature();
                // Toast.makeText(getApplicationContext(), getimm, Toast.LENGTH_LONG).show();
 
                 // Setting image if not null
-        if (getimm != null){
+        if (getimm != null && !getimm.isEmpty()){
          //   Toast.makeText(getApplicationContext(), "inside inm", Toast.LENGTH_LONG).show();
-            Glide.with(Main5Activity.this).load(getimm).into(ImgView);
+            Glide.with(getApplicationContext()).load(getimm).into(ImgView);
         }
 
 
@@ -329,6 +332,16 @@ public class Main5Activity extends AppCompatActivity {
 
             }
         });
+        DataAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (v == DataAdd)
+                {
+                    AddData();
+                }
+            }
+        });
+
 
         //Service Spin
 
@@ -378,6 +391,8 @@ public class Main5Activity extends AppCompatActivity {
 
                 }
             }
+
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -434,7 +449,7 @@ public class Main5Activity extends AppCompatActivity {
                     openCamera();
                 } else {
                     //permission from pouup denied
-                    Toast.makeText(Main5Activity.this, "Permission denied", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Permission denied", Toast.LENGTH_LONG).show();
                 }
             }
         }
@@ -453,6 +468,7 @@ public class Main5Activity extends AppCompatActivity {
 
 
     }
+
 
 
     @Override
@@ -476,21 +492,95 @@ public class Main5Activity extends AppCompatActivity {
                     while (!urlTask.isSuccessful()) ;
                     imguri = urlTask.getResult();
 
-                    getimm = imguri.toString();
+                    getimm1 = imguri.toString();
                     ImgView.setImageURI(Image_uri);
                     //Imge view with glide
                     //   Glide.with(Main5Activity.this).load(ss).into(ImgView);
 
 
-                    Toast.makeText(Main5Activity.this, "Image Uploaded", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Image Uploaded", Toast.LENGTH_LONG).show();
 
                 }
             });
 
         } else {
-            Toast.makeText(Main5Activity.this, "Image is not set", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Image is not set", Toast.LENGTH_LONG).show();
+
         }
+
+
+
+
+
+        }
+
+
+
+
+
+    public void AddData(){
+
+
+
+        Bitmap bm = mSignaturePad.getSignatureBitmap();
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.PNG, 50, byteArrayOutputStream);
+        byte[] bytes11 = byteArrayOutputStream.toByteArray();
+        newsign = android.util.Base64.encodeToString(bytes11, android.util.Base64.DEFAULT);
+        newassign = AssignSpin.getSelectedItem().toString().trim().toUpperCase();
+        newarea = AreaSpin.getSelectedItem().toString();
+
+        if (newassign != null && newassign.isEmpty())
+        {
+            newassign = getAs;
+        }
+
+
+
+        String newdate = DatePick.getText().toString();
+        String newname = Name1.getText().toString();
+        String newnumber = Number1.getText().toString();
+
+        String newarea1 = Area1.getText().toString().trim().toUpperCase();
+        String newsertype = ServiceSpin.getSelectedItem().toString().trim().toUpperCase();
+        String newinf = InfoSer.getText().toString().trim().toUpperCase();
+
+        String newstatus = StatusSpin.getSelectedItem().toString().trim().toUpperCase();
+        String newprio = PrioritySpin.getSelectedItem().toString().trim().toUpperCase();
+        String newbill = BillSpin.getSelectedItem().toString().trim().toUpperCase();
+        String newppstatus = PaymentSpin.getSelectedItem().toString().trim().toUpperCase();
+        String newremarks = Remarks.getText().toString().trim().toUpperCase();
+        if (getimm1 != null && !getimm1.isEmpty()){
+            getimm = getimm1;
+        }
+        if (newsertype != null && newsertype.isEmpty()){
+
+            newsertype = getSertt;
+
+        }
+
+
+
+        proAdd proAdd = new proAdd(newdate, gettime, newname, newnumber,newarea,newarea1, getimm, newsertype, newinf,newassign, newstatus, newprio,newbill, newppstatus, newremarks, newsign, msd);
+
+        reff.child(msd).setValue(proAdd);
+        Toast.makeText(getApplicationContext(), "Task " +msd + " Updated Successfully", Toast.LENGTH_LONG).show();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        },3000);
+
+
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+
     }
+
 
 
 }

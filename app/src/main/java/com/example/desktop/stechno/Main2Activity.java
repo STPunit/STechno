@@ -202,6 +202,7 @@ public class Main2Activity extends AppCompatActivity {
                     pr1.add(prname1);
                     ArrayAdapter<String> pradp1 = new ArrayAdapter<>(Main2Activity.this, R.layout.support_simple_spinner_dropdown_item, pr1);
                     BillSpin.setAdapter(pradp1);
+                    BillSpin.setSelection(1);
                 }
             }
 
@@ -252,6 +253,7 @@ public class Main2Activity extends AppCompatActivity {
 
                     ArrayAdapter<String> payadp = new ArrayAdapter<>(Main2Activity.this, R.layout.support_simple_spinner_dropdown_item, pay1);
                     PaymentSpin.setAdapter(payadp);
+
                 }
             }
 
@@ -273,6 +275,7 @@ public class Main2Activity extends AppCompatActivity {
                     pr.add(prname);
                     ArrayAdapter<String> pradp = new ArrayAdapter<>(Main2Activity.this, R.layout.support_simple_spinner_dropdown_item, pr);
                     PrioritySpin.setAdapter(pradp);
+                    PrioritySpin.setSelection(2);
                 }
             }
 

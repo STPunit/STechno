@@ -9,7 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+
+import com.google.android.gms.common.FirstPartyScopes;
 
 import java.util.ArrayList;
 
@@ -43,6 +46,13 @@ public class Comadp extends RecyclerView.Adapter<Comadp.Comhol> {
     comhol.txtTask.setText(profiles.get(i).getTaskServiceType());
     comhol.txtStatus.setText(profiles.get(i).getTaskPriority());
     comhol.txtAssign.setText(profiles.get(i).getTaskAssignedTo());
+    comhol.parentlayout.setOnLongClickListener(new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View v) {
+            Toast.makeText(context,"Long Pressed", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    });
     comhol.parentlayout.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {

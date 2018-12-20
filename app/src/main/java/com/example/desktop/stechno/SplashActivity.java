@@ -14,19 +14,10 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent intent= getIntent();
-        String id = intent.getStringExtra("id");
-        Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
-        if (id != null){
-            Intent intent1 = new Intent(this, Pintent.class);
-            intent.putExtra("id", id );
-            startActivity(intent1);
-        }
 
-        else {
             Intent intent2 = new Intent(this, MainActivity.class);
             startActivity(intent2);
             finish();
-        }
+
     }
 }

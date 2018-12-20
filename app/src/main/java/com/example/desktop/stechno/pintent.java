@@ -24,6 +24,7 @@ public class Pintent extends AppCompatActivity {
     ArrayList<proAdd> list;
     DatabaseReference reference;
     android.support.v7.widget.Toolbar toolbar;
+    String msd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,35 +32,35 @@ public class Pintent extends AppCompatActivity {
         setContentView(R.layout.pientn);
         Bundle extras = getIntent().getExtras();
 
-        assert extras != null;
-        final String msd = extras.getString("id");
-        Toast.makeText(this, msd, Toast.LENGTH_SHORT).show();
-        toolbar = findViewById(R.id.tbr);
-        toolbar.inflateMenu(R.menu.mange);
-        //onNewIntent(getIntent());
+        if(extras != null) {
+            msd = extras.getString("id");
+            Toast.makeText(this, msd, Toast.LENGTH_SHORT).show();
+            toolbar = findViewById(R.id.tbr);
+            toolbar.inflateMenu(R.menu.mange);
+            //onNewIntent(getIntent());
 
-        final TextView TskName = findViewById(R.id.Tskname);
-        final TextView Tdate = findViewById(R.id.Tdate);
-        final TextView Tid = findViewById(R.id.Tid);
-        final TextView Tpay = findViewById(R.id.Tpay);
-        final TextView Tareal = findViewById(R.id.Tareal);
-        final TextView Tprio = findViewById(R.id.Tprio);
-        final TextView Tstat = findViewById(R.id.Tstat);
-        final TextView Tass = findViewById(R.id.Tassign);
-        final TextView Tnum = findViewById(R.id.Tnum);
-        final TextView Tserc = findViewById(R.id.Tser);
-        final TextView Tinf = findViewById(R.id.Tinfo);
-        final TextView Tbill = findViewById(R.id.Tbill);
-        final TextView Tar = findViewById(R.id.Tar);
-        final ImageView Tim = findViewById(R.id.Tim);
-        final ImageView Tsig = findViewById(R.id.Tsig);
+            final TextView TskName = findViewById(R.id.Tskname);
+            final TextView Tdate = findViewById(R.id.Tdate);
+            final TextView Tid = findViewById(R.id.Tid);
+            final TextView Tpay = findViewById(R.id.Tpay);
+            final TextView Tareal = findViewById(R.id.Tareal);
+            final TextView Tprio = findViewById(R.id.Tprio);
+            final TextView Tstat = findViewById(R.id.Tstat);
+            final TextView Tass = findViewById(R.id.Tassign);
+            final TextView Tnum = findViewById(R.id.Tnum);
+            final TextView Tserc = findViewById(R.id.Tser);
+            final TextView Tinf = findViewById(R.id.Tinfo);
+            final TextView Tbill = findViewById(R.id.Tbill);
+            final TextView Tar = findViewById(R.id.Tar);
+            final ImageView Tim = findViewById(R.id.Tim);
+            final ImageView Tsig = findViewById(R.id.Tsig);
 //        if (msd != null) {
 //            DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("New Task").child(msd);
-        if (msd != null) {
-            reference = FirebaseDatabase.getInstance().getReference().child("New Task").child(msd);
-        }
+            if (msd != null) {
+                reference = FirebaseDatabase.getInstance().getReference().child("New Task").child(msd);
+            }
 
-        list = new ArrayList<>();
+            list = new ArrayList<>();
 
             reference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -94,6 +95,7 @@ public class Pintent extends AppCompatActivity {
 
                 }
             });
+        }
 
         toolbar.setOnMenuItemClickListener(new android.support.v7.widget.Toolbar.OnMenuItemClickListener() {
             @Override
@@ -121,4 +123,12 @@ public class Pintent extends AppCompatActivity {
 
         }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
+
+    }
 }

@@ -19,6 +19,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.core.utilities.Utilities;
+import com.google.firebase.storage.internal.Util;
 
 
 import java.io.ByteArrayInputStream;
@@ -76,11 +78,21 @@ public class Main6Activity extends AppCompatActivity {
                 Tbill.setText(list.get(0).getTaskBilled().toUpperCase());
                 Tar.setText(list.get(0).getTaskArea().toUpperCase());
                 String sig = list.get(0).getTaskSignature();
-                byte[] bytes = android.util.Base64.decode(sig,android.util.Base64.DEFAULT);
-                ByteArrayInputStream byteArrayInputStream =  new ByteArrayInputStream(bytes);
-                Tsig.setImageBitmap(BitmapFactory.decodeStream(byteArrayInputStream));
+                if(sig != null && !sig.isEmpty() )
+
+                {
+
+
+                    byte[] bytes = android.util.Base64.decode(sig, android.util.Base64.DEFAULT);
+                    ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
+                    Tsig.setImageBitmap(BitmapFactory.decodeStream(byteArrayInputStream));
+                }
+
                 String imm = list.get(0).getTaskImage();
-                Glide.with(Main6Activity.this).load(imm).into(Tim);
+                if (imm != null && !imm.isEmpty()){
+                    Glide.with(getApplicationContext()).load(imm).into(Tim);
+                }
+
 
 
 
